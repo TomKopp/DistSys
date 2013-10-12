@@ -1,0 +1,27 @@
+DistSys\ShopBundle\Entity\GalleryItem:
+  
+  type: entity
+  
+  table: galleryItem
+  
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+        
+  fields:
+    imgUrl: 
+      type: string
+    imgAlt: 
+      type: string
+    imgTitle:
+      type: string
+    file:
+      - File:
+        maxSize: 
+          
+  lifecycleCallbacks:
+    prePersist: [preUpload]
+    postPersist: [uploadFile]
+    postRemove: [removeUpload]

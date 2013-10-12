@@ -1,0 +1,15 @@
+DistSys\ShopBundle\Entity\Attribute:
+  
+  type: entity
+  
+  table: attributes
+  
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+        
+  fields:
+    name:
+      type: string

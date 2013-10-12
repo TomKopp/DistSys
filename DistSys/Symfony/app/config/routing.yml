@@ -1,0 +1,4 @@
+dist_sys_shop:
+    resource: "@DistSysShopBundle/Resources/config/routing.yml"
+    prefix:   /
+

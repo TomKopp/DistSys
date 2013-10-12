@@ -1,0 +1,44 @@
+DistSys\ShopBundle\Entity\Product:
+  
+  type: entity
+  
+  table: products
+  
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+        
+  fields:
+    name:
+      type: string
+    description:
+      type: text
+    price:
+      type: decimal
+      scale: 2
+    stock:
+      type: integer
+      unsigned: true
+    status:
+      type: boolean
+      
+  oneToMany:
+    galleryItems:
+      targetEntity: GalleryItem
+      mappedBy: id
+      cascade: ["all"]
+      
+  manyToMany:
+    attributesToProducts:
+      targetEntity: Attribute
+      joinTable:
+        name: attributes_to_products
+        joinColumns:
+          product_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          attribute_id:
+            referencedColumnName: id
+            

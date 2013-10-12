@@ -1,0 +1,7 @@
+parameters:
+#    dist_sys_shop.example.class: DistSys\ShopBundle\Example
+
+services:
+#    dist_sys_shop.example:
+#        class: %dist_sys_shop.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
