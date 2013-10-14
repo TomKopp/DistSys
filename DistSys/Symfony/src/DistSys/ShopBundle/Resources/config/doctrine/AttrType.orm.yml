@@ -1,0 +1,22 @@
+DistSys\ShopBundle\Entity\AttrType:
+  
+  type: entity
+  
+  table: attributeTypes
+  
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+        
+  fields:
+    name:
+      type: string
+      nullable: false
+      
+  oneToMany:
+    attributes:
+      targetEntity: Attribute
+      mappedBy: id
+      cascade: ["all"]

@@ -13,14 +13,17 @@ DistSys\ShopBundle\Entity\Product:
   fields:
     name:
       type: string
+      nullable: false
     description:
       type: text
     price:
       type: decimal
       scale: 2
+      nullable: false
     stock:
       type: integer
       unsigned: true
+      nullable: false
     status:
       type: boolean
       
@@ -34,7 +37,7 @@ DistSys\ShopBundle\Entity\Product:
     attributesToProducts:
       targetEntity: Attribute
       joinTable:
-        name: attributes_to_products
+        name: attributesToProducts
         joinColumns:
           product_id:
             referencedColumnName: id

@@ -1,0 +1,16 @@
+DistSys\ShopBundle\Entity\SimpleSite:
+  
+  type: entity
+  
+  table: simpleSite
+  
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+        
+  fields:
+    content:
+      type: text
+      nullable: false

@@ -1,0 +1,26 @@
+DistSys\ShopBundle\Entity\Booking:
+  
+  type: entity
+  
+  table: booking
+  
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+        
+  fields:
+    dateOfOrder:
+      type: datetime
+    status:
+      type: string
+      length: 1
+      nullable: false
+      
+  oneToMany:
+    bookingItems:
+      targetEntity: BookingItem
+      mappedBy: id
+      cascade: ["all"]
+    

@@ -151,14 +151,19 @@ class GalleryItem {
   }
 
   /**
+   * Get absolute Path to image
    * 
-   * @param string $productName
-   * @return string||NULL
+   * @return string|NULL
    */
   public function getAbsolutePath() {
     return null === $this->imgUrl ? null : $this->getUploadRootDir() . '/' . $this->imgUrl;
   }
 
+  /**
+   * Get Path to image from 'web'-folder
+   * 
+   * @return string|NULL
+   */
   public function getWebPath() {
     return null === $this->imgUrl ? null : $this->getUploadDir() . '/' . $this->imgUrl;
   }
@@ -188,7 +193,7 @@ class GalleryItem {
   }
 
   /**
-   * PostPersist
+   * Post Persist
    */
   public function uploadFile() {
     if (NULL === $this->file) {
@@ -212,7 +217,7 @@ class GalleryItem {
   }
 
   /**
-   * PostRemove
+   * Post Remove
    */
   public function removeUpload() {
     if ($file = $this->getAbsolutePath()) { //yes this is correct

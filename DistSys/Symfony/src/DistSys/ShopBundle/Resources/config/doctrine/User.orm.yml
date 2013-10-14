@@ -1,0 +1,48 @@
+DistSys\ShopBundle\Entity\User:
+  
+  type: entity
+  
+  table: users
+  
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+        
+  fields:
+    email:
+      type: string
+      unique: true
+      nullable: false
+    firstname:
+      type: string
+      nullable: false
+    lastname:
+      type: string
+      nullable: false
+    male:
+      type: boolean
+      nullable: false
+    street:
+      type: string
+      nullable: false
+    postal:
+      type: string
+      nullable: false
+    city:
+      type: string
+      nullable: false
+    phone:
+      type: string
+    passwd:
+      type: string
+      nullable: false
+    status:
+      type: boolean
+      
+  oneToMany:
+    bookings:
+      targetEntity: Booking
+      mappedBy: id
+      cascade: ["all"]

@@ -13,3 +13,8 @@ DistSys\ShopBundle\Entity\Attribute:
   fields:
     name:
       type: string
+
+  manyToOne:
+    attributeType:
+      targetEntity: AttrType
+      inversedBy: attributes

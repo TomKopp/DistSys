@@ -17,7 +17,7 @@ class Product
     /**
      * @var string
      */
-    private $name;
+    private $name = '';
 
     /**
      * @var string
@@ -27,12 +27,12 @@ class Product
     /**
      * @var float
      */
-    private $price;
+    private $price = 0;
 
     /**
      * @var integer
      */
-    private $stock;
+    private $stock = 0;
 
     /**
      * @var boolean
@@ -248,4 +248,39 @@ class Product
     {
         return $this->attributesToProducts;
     }
+    
+    
+  /**
+   * Get productsByAttributes
+   * 
+   * @param int $attrId
+   * @param array $param
+   * @return Product
+   */
+  public function getProductsByAttributes($attrId, $param = NULL) {
+    if ($param) {
+      array_key_exists('limit', $param) ? $limit = (int) $param['limit'] : $limit = NULL;
+      array_key_exists('offset', $param) ? $offset = (int) $param['offset'] : $offset = NULL;
+      array_key_exists('order', $param) ? $order = (string) $param['order'] : $order = NULL;
+    }
+
+    $qb = $this->createQueryBuilder('p');
+    $qb->select('p')
+      ->where('?1 MEMBER OF p.attributes')
+      //->where($qb->expr()->eq('p.attributes', '?1'))
+      ->andWhere($qb->expr()->like('p.status', '?2'))
+      ->setParameters(array(1 => $attrId, 2 => '1'));
+
+    if ($offset) {
+      $qb->setFirstResult($offset);
+    }
+    if ($limit) {
+      $qb->setMaxResults($limit);
+    }
+    if ($order) {
+      $qb->orderBy('p.productName', $order);
+    }
+
+    return $qb->getQuery()->getResult();
+  }
 }

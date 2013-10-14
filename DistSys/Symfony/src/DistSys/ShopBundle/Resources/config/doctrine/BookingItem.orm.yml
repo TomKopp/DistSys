@@ -1,0 +1,20 @@
+DistSys\ShopBundle\Entity\BookingItem:
+  
+  type: entity
+  
+  table: bookingitems
+  
+  id:
+    id:
+      type: integer
+      generator:
+        strategy: AUTO
+        
+  fields:
+    quatity:
+      type: integer
+    
+  oneToOne:
+    product:
+      targetEntity: Product
+      mappedBy: id
