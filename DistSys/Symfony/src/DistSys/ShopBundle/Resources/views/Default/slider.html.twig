@@ -1,0 +1,31 @@
+{# block slider #}
+
+{% block slider %}
+<article id="mi-slider" class="mi-slider">
+
+  <div class="hovergallery">
+    <div class="hovergallery-border"></div>
+    {% for headingname in categories|keys %}
+    <a href="#" class="cat {{ 't' ~ loop.index }}">{{ headingname }}</a>
+    {% endfor %}
+
+    <div class="hoverholder">
+      <div class="hoverslide">
+      {% for headingname, heading in categories %}
+        <ul class="{{ headingname }} horizontal-list">
+        {% for product in heading %}
+          <li>
+            <a href="{{ path('schmucklisShowProduct', {'productId': product.id|e}) }}">
+              <img src="{{ asset('images/products/' ~ product.galleryItems|first.imageUrl) }}" alt="{{ product.galleryItems|first.imageAlt }}" title="{{ product.galleryItems|first.imageTitle }}">
+{#              <p class="prod-name">{{ product.productName }}</p>#}
+            </a>
+          </li>
+        {% endfor %}
+        </ul>
+      {% endfor %}
+      </div><!--/.hoverslide-->
+    </div><!--/.hoverholder-->
+  </div><!--/.hovergalery-->
+
+</article>
+{% endblock %}

@@ -1,0 +1,48 @@
+{# header block#}
+
+{% block header %}
+<a href="{{ path('schmucklisHome') }}" title="Home" class="logo">
+  <img src="{{ asset('bundles/schmucklisshop/logo.png') }}" alt="logo" title="Home">
+</a>
+<nav>
+{% render(controller('schmucklisShopBundle:Navigation:index')) %}
+</nav>
+<div class="top-links">
+  <div class="login">
+    {% if is_granted('ROLE_USER') %}
+    <a href="{{ path ('schmucklisLogout') }}" title="Logout">Logout</a>       
+    {% else %}       
+    <a href="{{ path ('schmucklisLogin') }}" title="Login">Login</a> 
+    <a href="{{ path ('schmucklis_register') }}" title="Registrieren">Registrieren</a>
+    {% endif %} 
+  </div>
+  <div class="cart">
+    <a href="{{ path ('schmucklisCartShow') }}" title="Cart" class="cart-link">
+      {% set cartAmount = app.session.get('cartAmount') %}      
+      {% set priceComplete = app.session.get('priceComplete') %}
+      {% if cartAmount > 0 %}
+      <span>
+        {{ cartAmount }} Artikel<br>
+        {{ priceComplete |number_format(2,',', '.' )}} €
+      </span>
+      <span class="ico cart-full">&nbsp</span>
+{#      <img src="{{ asset('bundles/schmucklisshop/images/cart_empty.png') }}" alt="cart-icon" title="Go to cart">#}
+      {% else %}
+      <span>
+        0 Artikel<br>
+        0,00 €
+      </span>
+      <span class="ico">&nbsp</span>
+      {% endif %}
+    </a>
+  </div>
+  <div class="quick-search">
+    <form action="{{ path('schmucklisSearchResult') }}" method="post">
+      <!--<input type="text" id="search" name="search" value="Suchbegriff eingeben..." onclick="if (this.value && this.value === this.defaultValue)
+            this.value = '';">-->
+      <input type="text" id="search" name="search" placeholder="Suchbegriff eingeben..." value="">
+      <button type="submit">Suche</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

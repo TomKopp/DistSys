@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>{% block title %}DistSys{% endblock %}</title>
+    {% block stylesheets %}
+    {% endblock %}
+    <link rel="icon" type="image/x-icon" href="{{ asset('bundles/schmucklisshop/images/favicon.ico') }}">
+  </head>
+  <body class="{% block bodyClasses %}{% endblock %}">
+    <header>
+      {% embed 'DistSysShopBundle:Scaffolding:header.html.twig' %}{% endembed %}
+    </header>
+
+    <section class="main {% block mainClasses%}{% endblock %}">
+        {% block main %}{% endblock %}
+    </section><!--/.main-->
+
+    <footer>
+      {% embed 'DistSysShopBundle:Scaffolding:footer.html.twig' %}{% endembed %}
+    </footer>
+    {% block javascripts %}{% endblock %}
+  </body>
+</html>

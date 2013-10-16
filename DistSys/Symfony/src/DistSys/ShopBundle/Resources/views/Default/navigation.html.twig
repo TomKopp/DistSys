@@ -1,0 +1,49 @@
+{# block navigation #}
+
+{% block navigation %}
+{% set routeParam = app.request.getPathInfo() %}
+{#{% set routeParam = app.request.get('headingId') %}#}
+<ul class="horizontal-list">
+  <li class="hl-lvl-0">
+    <a href="{{ path('schmucklisHome') }}" title="Start" class="{% if path('schmucklisHome') is sameas(routeParam) %}active{% endif %}">Start</a>
+  </li>
+
+  <li class="hl-lvl-0">
+    <a href="{{ path( 'schmucklisShowHeading', {'headingId': headings|first.id|e} ) }}" title="Produkte" class="{#% if path('schmucklisShowAllProducts') is sameas(routeParam) %}text-highlight-color{% endif %#}">Produkte</a>
+    <ul>
+      {% for heading in headings %}
+      <li class="hl-lvl-1">
+        <a class="{% if heading.id == routeParam %}active{% endif %}" href="{{ path( 'schmucklisShowHeading', {'headingId': heading.id|e} ) }}">{{ heading.attributename }}</a>
+      </li>
+      {% else %}
+      <li class="hl-lvl-1">
+        <p>No Categories found</p>
+      </li>
+      {% endfor %}
+    </ul>
+  </li>
+
+  <li class="hl-lvl-0">
+    <a href="{{ path('schmucklisHome', {'url': 'faq'}) }}" title="FAQs" class="{% if path('schmucklisHome', {'url': 'faq'}) is sameas(routeParam) %}active{% endif %}">FAQs</a>
+  </li>
+
+  <li class="hl-lvl-0">
+    <a href="{{ path('schmucklisContact') }}" title="Kontakt" class="{% if path('schmucklisContact') is sameas(routeParam) %}active{% endif %}">Kontakt</a>
+  </li>
+
+  {% if is_granted('ROLE_USER') %}
+  <li class="hl-lvl-0">
+    <a href="{{ path ('schmucklisUserAccount') }}" title="Mein Konto">Mein Konto</a>    
+    <ul>
+      <li class="hl-lvl-1">
+        <a class="{% if path('schmucklisUserData') is sameas(routeParam) %}active{% endif %}" href="{{ path( 'schmucklisUserData') }}">Meine Daten</a>
+      </li>
+      <li class="hl-lvl-1">
+        <a class="{% if path('schmucklisUserOrders') is sameas(routeParam) %}active{% endif %}" href="{{ path( 'schmucklisUserOrders') }}">Meine Bestellungen</a>
+      </li>
+    </ul>
+  </li>  
+  {% endif %} 
+
+</ul>
+{% endblock %}
