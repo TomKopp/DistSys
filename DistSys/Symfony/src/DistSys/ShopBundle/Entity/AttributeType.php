@@ -5,9 +5,9 @@ namespace DistSys\ShopBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AttrType
+ * AttributeType
  */
-class AttrType
+class AttributeType
 {
     /**
      * @var integer
@@ -17,7 +17,7 @@ class AttrType
     /**
      * @var string
      */
-    private $name = '';
+    private $name;
 
     /**
      * @var \Doctrine\Common\Collections\Collection
@@ -46,7 +46,7 @@ class AttrType
      * Set name
      *
      * @param string $name
-     * @return AttrType
+     * @return AttributeType
      */
     public function setName($name)
     {
@@ -69,7 +69,7 @@ class AttrType
      * Add attributes
      *
      * @param \DistSys\ShopBundle\Entity\Attribute $attributes
-     * @return AttrType
+     * @return AttributeType
      */
     public function addAttribute(\DistSys\ShopBundle\Entity\Attribute $attributes)
     {

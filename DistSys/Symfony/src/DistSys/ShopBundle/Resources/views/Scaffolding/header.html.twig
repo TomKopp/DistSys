@@ -5,7 +5,7 @@
   <img src="{{ asset('bundles/schmucklisshop/logo.png') }}" alt="logo" title="Home">
 </a>
 <nav>
-{% render(controller('schmucklisShopBundle:Navigation:index')) %}
+{% render(controller('DistSysShopBundle:Navigation:index')) %}
 </nav>
 <div class="top-links">
   <div class="login">
@@ -26,7 +26,6 @@
         {{ priceComplete |number_format(2,',', '.' )}} €
       </span>
       <span class="ico cart-full">&nbsp</span>
-{#      <img src="{{ asset('bundles/schmucklisshop/images/cart_empty.png') }}" alt="cart-icon" title="Go to cart">#}
       {% else %}
       <span>
         0 Artikel<br>

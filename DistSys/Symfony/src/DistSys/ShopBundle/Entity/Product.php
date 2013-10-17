@@ -17,7 +17,7 @@ class Product
     /**
      * @var string
      */
-    private $name = '';
+    private $name;
 
     /**
      * @var string
@@ -27,12 +27,12 @@ class Product
     /**
      * @var float
      */
-    private $price = 0;
+    private $price;
 
     /**
      * @var integer
      */
-    private $stock = 0;
+    private $stock;
 
     /**
      * @var boolean
@@ -47,7 +47,7 @@ class Product
     /**
      * @var \Doctrine\Common\Collections\Collection
      */
-    private $attributesToProducts;
+    private $attributes;
 
     /**
      * Constructor
@@ -55,7 +55,7 @@ class Product
     public function __construct()
     {
         $this->galleryItems = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->attributesToProducts = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->attributes = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -217,39 +217,39 @@ class Product
     }
 
     /**
-     * Add attributesToProducts
+     * Add attributes
      *
-     * @param \DistSys\ShopBundle\Entity\Attribute $attributesToProducts
+     * @param \DistSys\ShopBundle\Entity\Attribute $attributes
      * @return Product
      */
-    public function addAttributesToProduct(\DistSys\ShopBundle\Entity\Attribute $attributesToProducts)
+    public function addAttribute(\DistSys\ShopBundle\Entity\Attribute $attributes)
     {
-        $this->attributesToProducts[] = $attributesToProducts;
+        $this->attributes[] = $attributes;
     
         return $this;
     }
 
     /**
-     * Remove attributesToProducts
+     * Remove attributes
      *
-     * @param \DistSys\ShopBundle\Entity\Attribute $attributesToProducts
+     * @param \DistSys\ShopBundle\Entity\Attribute $attributes
      */
-    public function removeAttributesToProduct(\DistSys\ShopBundle\Entity\Attribute $attributesToProducts)
+    public function removeAttribute(\DistSys\ShopBundle\Entity\Attribute $attributes)
     {
-        $this->attributesToProducts->removeElement($attributesToProducts);
+        $this->attributes->removeElement($attributes);
     }
 
     /**
-     * Get attributesToProducts
+     * Get attributes
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getAttributesToProducts()
+    public function getAttributes()
     {
-        return $this->attributesToProducts;
+        return $this->attributes;
     }
     
-    
+        
   /**
    * Get productsByAttributes
    * 
@@ -267,9 +267,8 @@ class Product
     $qb = $this->createQueryBuilder('p');
     $qb->select('p')
       ->where('?1 MEMBER OF p.attributes')
-      //->where($qb->expr()->eq('p.attributes', '?1'))
       ->andWhere($qb->expr()->like('p.status', '?2'))
-      ->setParameters(array(1 => $attrId, 2 => '1'));
+      ->setParameters(array(1 => $attrId, 2 => TRUE));
 
     if ($offset) {
       $qb->setFirstResult($offset);
@@ -283,4 +282,5 @@ class Product
 
     return $qb->getQuery()->getResult();
   }
+
 }

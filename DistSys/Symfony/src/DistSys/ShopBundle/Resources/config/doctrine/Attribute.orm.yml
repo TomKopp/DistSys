@@ -16,5 +16,10 @@ DistSys\ShopBundle\Entity\Attribute:
 
   manyToOne:
     attributeType:
-      targetEntity: AttrType
+      targetEntity: AttributeType
       inversedBy: attributes
+      
+  manyToMany:
+    products:
+      targetEntity: Product
+      mappedBy: attributes

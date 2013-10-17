@@ -1,0 +1,50 @@
+{% extends 'DistSysShopBundle:Scaffolding:scaffolding.html.twig' %}
+
+{% block mainClasses %}category{% endblock %}
+{% block main %}
+
+<ul class="products horizontal-list">
+  {% for product in products %}
+  <li class="hl-lvl-0">
+    <a href="{{ path('DistSysShowProduct', {'productId': product.id}) }}">
+      {% if product.galleryItems|first.imageUrl is defined %}
+      <img src="{{ asset('images/products/' ~ product.galleryItems|first.imageUrl) }}" alt="{{ product.galleryItems|first.imageAlt }}" title="{{ product.galleryItems|first.imageTitle }}">
+      {% else %}
+      <img src="http://dummyimage.com/300x300/cccccc/000000" alt="DistSys Image" title="DistSys Image">
+      {% endif %}
+    </a>
+    <a class="font-highlight-color prod-name" href="{{ path( 'DistSysShowProduct', {'productId': product.id} ) }}">{{ product.productName }}</a>
+    <p class="prod-teaser">{{ product.teaser }}</p>
+  </li>
+
+{% if (loop.index % 4) is sameas(0) and not loop.last %}
+</ul>
+<ul class="products horizontal-list">
+{% endif %}
+
+  {% else %}
+  <li class="hl-lvl-0">
+    <p>No Products in this category</p>
+  </li>
+  {% endfor %}
+</ul>
+
+<ul class="pagination">
+  {% for key, site in pagination %}
+  {% if not(loop.first and site.active) %}
+  <li>
+    <a class="prev" href="{{ path('DistSysShowHeading', {'categoryId': categoryId, 'pagination': key-1}) }}"> {{ '<<'|e }}</a>
+  </li>
+  {% endif %}
+  <li>
+    <a href="{{ path('DistSysShowHeading', {'categoryId': categoryId, 'pagination': key}) }}" class="{% if site.active %}active{% endif %}">{{ site|e }}</a>
+  </li>
+  {% if not(loop.last and site.active) %}
+  <li>
+    <a class="next" href="{{ path('DistSysShowHeading', {'categoryId': categoryId, 'pagination': key+1}) }}"> {{ '<<'|e }}</a>
+  </li>
+  {% endif %}
+  {% endfor %}
+</ul>                    
+
+{% endblock %}

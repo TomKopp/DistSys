@@ -1,0 +1,53 @@
+{% extends 'DistSysShopBundle:Scaffolding:scaffolding.html.twig' %}
+
+{% block main %}
+<article class="product">
+
+  {% if product.galleryItems|first.imageUrl is defined %}
+  <img src="{{ asset('images/products/' ~ product.galleryItems|first.imageUrl) }}" alt="{{ product.galleryItems|first.imageAlt }}" title="{{ product.galleryItems|first.imageTitle }}">
+  {% else %}
+  <img src="http://dummyimage.com/300x300/cccccc/000000" alt="DistSys Image" title="DistSys Image">
+  {% endif %}
+
+  <div class="wrapper">
+    <div class="prod-attr">
+      <h1>{{ product.productName }}</h1>
+      <p>Artikelnummer: {{ product.id }}</p>
+      <p>{{ product.description }}</p>
+      <ul>
+      {% for categoryName, category in categories %}
+        {% if categoryName is not sameas('ShopKategorie') %}
+        <li>
+          <p>{{ categoryName }}: 
+          {% for attribute in category %}
+            <span>{{ attribute.attributename }}{% if not loop.last %}, {% endif %}</span>
+          {% endfor %}
+          </p>
+        </li>
+        {% endif %}
+      {% endfor %}
+      </ul>
+    </div><!--/.prod-attr-->
+
+    <div class="prod-buy">
+      <p class="prod-price">{{ product.price|number_format(2,',', '.' )}} €</p>
+      <p>inkl. 19% MwSt<br>zzgl. Versand</p>
+      {% if product.stock > 0 %}
+      <form class="into-cart-form" method="post" action="{{ path( 'DistSysCartAdd', {'productId': product.id} ) }}">
+        <div class="submit-container">
+          <input type="submit" name="in den Warenkorb" value="" class="into-cart">
+        </div>
+      </form>
+      {% else %}
+      <p>Das Produkt ist derzeit leider nicht verfügbar.</p>
+      {% endif %}
+    </div><!--/.prod-buy-->
+  </div><!--/.wrapper-->
+
+</article>
+
+<asside class="related-products">
+  <h2>Das könnte Sie auch interessieren</h2>
+  {% render(controller('DistSysShopBundle:Shop:renderRelatedProducts', {'productId': product.id})) %}
+</asside>
+{% endblock %}

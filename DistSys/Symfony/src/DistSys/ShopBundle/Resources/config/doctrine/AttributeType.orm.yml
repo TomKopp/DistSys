@@ -1,4 +1,4 @@
-DistSys\ShopBundle\Entity\AttrType:
+DistSys\ShopBundle\Entity\AttributeType:
   
   type: entity
   

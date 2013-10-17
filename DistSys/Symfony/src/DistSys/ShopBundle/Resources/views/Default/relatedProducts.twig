@@ -1,0 +1,15 @@
+<ul class="horizontal-list">
+  {% for product in relatedProducts %}
+  <li class="hl-lvl-0">
+    <a href="{{ path('DistSysShowProduct', {'productId': product.id}) }}">
+      {% if product.galleryItems|first.imageUrl is defined %}
+      <img src="{{ asset('images/products/' ~ product.galleryItems|first.imageUrl) }}" alt="{{ product.galleryItems|first.imageAlt }}" title="{{ product.galleryItems|first.imageTitle }}">
+      {% else %}
+      <img src="http://dummyimage.com/300x300/cccccc/000000" alt="DistSys Image" title="DistSys Image">
+      {% endif %}
+    </a>
+    <a class="font-highlight-color" href="{{ path( 'DistSysShowProduct', {'productId': product.id} ) }}">{{ product.productName }}</a>
+    <p>{{ product.price|number_format(2,',', '.' ) }} €</p>
+  </li>
+  {% endfor %}
+</ul>

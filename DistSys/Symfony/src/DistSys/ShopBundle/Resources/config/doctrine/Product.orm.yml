@@ -34,8 +34,9 @@ DistSys\ShopBundle\Entity\Product:
       cascade: ["all"]
       
   manyToMany:
-    attributesToProducts:
+    attributes:
       targetEntity: Attribute
+      inversedBy: products
       joinTable:
         name: attributesToProducts
         joinColumns:

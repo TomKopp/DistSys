@@ -13,7 +13,7 @@
     <ul>
       {% for heading in headings %}
       <li class="hl-lvl-1">
-        <a class="{% if heading.id == routeParam %}active{% endif %}" href="{{ path( 'schmucklisShowHeading', {'headingId': heading.id|e} ) }}">{{ heading.attributename }}</a>
+        <a class="{# {% if heading.id == routeParam %}active{% endif %} #}{% if heading.active %}{{active}}{% endif %}" href="{{ path( 'schmucklisShowHeading', {'headingId': heading.id|e} ) }}">{{ heading.attributename }}</a>
       </li>
       {% else %}
       <li class="hl-lvl-1">
