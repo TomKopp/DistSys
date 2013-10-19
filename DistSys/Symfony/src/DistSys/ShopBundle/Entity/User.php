@@ -349,4 +349,42 @@ class User
     {
         return $this->bookings;
     }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $roles;
+
+
+    /**
+     * Add roles
+     *
+     * @param \DistSys\ShopBundle\Entity\Role $roles
+     * @return User
+     */
+    public function addRole(\DistSys\ShopBundle\Entity\Role $roles)
+    {
+        $this->roles[] = $roles;
+    
+        return $this;
+    }
+
+    /**
+     * Remove roles
+     *
+     * @param \DistSys\ShopBundle\Entity\Role $roles
+     */
+    public function removeRole(\DistSys\ShopBundle\Entity\Role $roles)
+    {
+        $this->roles->removeElement($roles);
+    }
+
+    /**
+     * Get roles
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getRoles()
+    {
+        return $this->roles;
+    }
 }

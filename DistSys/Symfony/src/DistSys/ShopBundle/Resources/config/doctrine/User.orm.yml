@@ -46,3 +46,16 @@ DistSys\ShopBundle\Entity\User:
       targetEntity: Booking
       mappedBy: id
       cascade: ["all"]
+      
+  manyToMany:
+    roles:
+      targetEntity: Role
+      inversedBy: users
+      joinTable:
+        name: rolesToUsers
+        joinColumns:
+          user_id:
+            referencedColumnName: id
+        inverseJoinColumns:
+          role_id:
+            referencedColumnName: id
