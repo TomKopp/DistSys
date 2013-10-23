@@ -2,12 +2,14 @@
 
 namespace DistSys\ShopBundle\Entity;
 
+use Symfony\Component\Security\Core\Authentication\Provider\DaoAuthenticationProvider;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * User
- */
-class User
+
+class User  implements UserInterface
 {
     /**
      * @var integer
@@ -74,7 +76,27 @@ class User
      */
     public function __construct()
     {
+    	$this->salt = md5(uniqid());
         $this->bookings = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    
+    /*
+     * methods for UserCheckerInterface
+    */
+    public function getRole()
+    {
+    	return $this->getRole()->toArray();
+    }
+    
+    public function eraseCredentials()
+    {
+    
+    }
+    
+    public function equals(UserInterface $user)
+    {
+    	return ($this->getUsername() == $user->getUsername() || $this->getEmail() == $user->getUsername());
     }
     
     /**
@@ -385,6 +407,90 @@ class User
      */
     public function getRoles()
     {
-        return $this->roles;
+        return $this->roles->toArray();
+    }
+    /**
+     * @var string
+     */
+    private $salt;
+
+
+    /**
+     * Set salt
+     *
+     * @param string $salt
+     * @return User
+     */
+    public function setSalt($salt)
+    {
+        $this->salt = $salt;
+    
+        return $this;
+    }
+
+    /**
+     * Get salt
+     *
+     * @return string 
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
+    /**
+     * @var string
+     */
+    private $password;
+
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->password = $password;
+    
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string 
+     */
+    public function getPassword()
+    {
+        return $this->password;
+    }
+    /**
+     * @var string
+     */
+    private $username;
+
+
+    /**
+     * Set username
+     *
+     * @param string $username
+     * @return User
+     */
+    public function setUsername($username)
+    {
+        $this->username = $username;
+    
+        return $this;
+    }
+
+    /**
+     * Get username
+     *
+     * @return string 
+     */
+    public function getUsername()
+    {
+        return $this->username;
     }
 }

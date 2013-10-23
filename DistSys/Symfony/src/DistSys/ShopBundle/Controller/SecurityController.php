@@ -1,0 +1,159 @@
+<?php
+
+namespace DistSys\ShopBundle\Controller;
+
+
+use DistSys\ShopBundle\Repository;
+
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+
+
+use Symfony\Component\Security\Core\SecurityContext;
+
+
+class SecurityController extends Controller
+{
+	/**
+	 * @Template()
+	 */
+    public function loginAction()
+    {
+			// Session laden
+    	
+    	$request = $this->getRequest();
+    	$session = $request->getSession();
+    	
+    	// get the login error if there is one
+    	if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
+    		$error = $request->attributes->get(
+    				SecurityContext::AUTHENTICATION_ERROR
+    		);
+    	} else {
+    		$error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
+    		$session->remove(SecurityContext::AUTHENTICATION_ERROR);
+    	}
+    	
+    	return 
+    			array(
+    					// last username entered by the user
+    					'last_username' => $session->get(SecurityContext::LAST_USERNAME),
+    					'error'         => $error,
+    			
+    	);
+
+    }
+    
+    public function loginCheckAction(){
+ 
+    	// The security layer will intercept this request
+    }
+    
+    /**
+     * @Route("/logout/", name="logout")
+     */
+    public function  logoutAction(){
+    	// The security layer will intercept this request
+    	
+    }
+    
+    /**
+     * @Template()
+     */
+    public function registerAction(){
+    	// Registrier Formular initialisieren
+       $form = $this->createForm(
+            new RegistrationType(),
+            new Registration()
+        );
+				// Formular an View übergeben
+        return array('form' => $form->createView());
+    }
+    
+    
+    /**
+     * @Route("/create/", name="create")
+     * @Template()
+     */
+    public function createAction(){
+			$em = $this->getDoctrine()->getManager();
+			// Formular initialisieren
+	    $form = $this->createForm(new RegistrationType(), new Registration());
+	
+	    $form->bind($this->getRequest());
+			
+	    // Testen ob das Formular valid ist
+	    if ($form->isValid()) {
+	    	
+	    	$registration = $form->getData();
+	     	$user = $registration->getUser();
+	    	// Daten aus Formular abgreifen
+	    	// unique user ?
+	    	$unique = $em->getRepository('WebShopBundle:User')->isUserUnique($user->getUsername(), $user->getEmail());
+	      // Wenn neuer User, dann Anlegen
+				if ($unique){
+						
+					// Rolle für den USer setzen
+					$role = $em->getRepository('WebShopBundle:Role')->findOneByName('ROLE_USER');
+		      $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+		        // Passwort setzen
+		      $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
+		        
+		      //Passwort verschlüsselt in Datenbank schreiben
+	
+		      $user->setPassword($password);
+		      $user->addRole($role);
+		        
+		      $em->persist($user);
+		        
+		      // Adresse für User anlegen  
+		      $adress = new Adress();
+				  $adress->setUser($user);
+		      $em->persist($adress);
+		      
+          // Warenkorb für USer anlegen
+		      $cart = new Cart();
+		      $cart->setUser($user);
+		      $em->persist($cart);
+	
+
+		        
+		      $em->flush();
+		        
+		      // Willkommens Email an User vershcicken
+		      	        
+		      $message = \Swift_Message::newInstance()     // we create a new instance of the Swift_Message class
+		        					->setSubject('Scheiben-Bude.de.vu')     // we configure the title
+		        	        ->setFrom('notification@scheiben-bude.de.vu')     // we configure the sender
+		        	        ->setTo($user->getEmail())     // we configure the recipient
+		        	        ->setBody(
+		        	        		$this->renderView('WebShopBundle:Security:register.email.html.twig', 
+		        	        				              array( 'user' => $user)),
+		        	        		'text/html'
+		        	        		)
+		        
+		        // and we pass the $name variable to the text template which serves as a body of the message
+		        ;
+		      $this->get('mailer')->send($message);     // then we send the message.
+		        
+	     		//return array( );
+		
+		      return array('user' => $user);
+				}
+				
+				
+	    }
+	
+			return $this->render('WebShopBundle:Security:register.html.twig', array(
+					'user' => $user,
+					'form' => $form->createView(),
+					'error' => "Email oder Username schon registriert!"
+	    ));
+    }
+
+    
+
+
+    
+}

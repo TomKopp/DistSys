@@ -1,7 +1,7 @@
 DistSys\ShopBundle\Entity\User:
   
   type: entity
-  
+  repositoryClass: DistSys\ShopBundle\Entity\UserRepository
   table: users
   
   id:
@@ -11,35 +11,40 @@ DistSys\ShopBundle\Entity\User:
         strategy: AUTO
         
   fields:
+    username:
+      type: string
+      nullable: false
     email:
+      type: string
+      unique: true
+      nullable: false
+    salt:
       type: string
       unique: true
       nullable: false
     firstname:
       type: string
-      nullable: false
+      nullable: true
     lastname:
       type: string
-      nullable: false
+      nullable: true
     male:
       type: boolean
-      nullable: false
+      nullable: true
     street:
       type: string
-      nullable: false
+      nullable: true
     postal:
       type: string
-      nullable: false
+      nullable: true
     city:
       type: string
-      nullable: false
+      nullable: true
     phone:
       type: string
-    passwd:
+    password:
       type: string
       nullable: false
-    status:
-      type: boolean
       
   oneToMany:
     bookings:
