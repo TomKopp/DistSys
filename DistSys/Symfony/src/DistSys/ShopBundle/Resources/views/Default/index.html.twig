@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        {% block stylesheets %}{% endblock %}
-        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
-    </head>
-    <body>
-        {% block body %}
+{% extends 'DistSysShopBundle::base.html.twig' %}
+
+{% block body %}
           Hello {{ name }}!
-        {% endblock %}
-        {% block javascripts %}{% endblock %}
-    </body>
-</html>
+          
+          {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+          <a href="{{ path('login') }}">login</a>
+          {% else %}
+          <a href="{{ path('logout') }}">logout</a>
+          {% endif %}
+{% endblock %}

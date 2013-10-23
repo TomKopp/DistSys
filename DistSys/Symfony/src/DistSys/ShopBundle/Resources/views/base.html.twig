@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
+		{% stylesheets '@DistSysShopBundle/Resources/public/css/bootstrap-responsive.css'       
+		    filter='yui_css' 
+        	output='css/min.css'
+        %}
+		<link rel="stylesheet" href="{{ asset_url }}" />
+		{% endstylesheets %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
+    </head>
+    <body>
+        {% block body %}
+          Hello {{ name }}!
+        {% endblock %}
+        {% javascripts 
+                               
+        	filter='yui_js' 
+            output='js/min.js'
+         %}
+         <script src="{{ asset_url }}"></script>
+         {% endjavascripts %}
+    </body>
+</html>
