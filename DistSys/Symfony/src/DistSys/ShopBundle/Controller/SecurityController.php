@@ -3,6 +3,10 @@
 namespace DistSys\ShopBundle\Controller;
 
 
+use DistSys\ShopBundle\Form\Model\Registration;
+
+use DistSys\ShopBundle\Form\Type\RegistrationType;
+
 use DistSys\ShopBundle\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -73,7 +77,6 @@ class SecurityController extends Controller
     
     
     /**
-     * @Route("/create/", name="create")
      * @Template()
      */
     public function createAction(){
@@ -90,12 +93,12 @@ class SecurityController extends Controller
 	     	$user = $registration->getUser();
 	    	// Daten aus Formular abgreifen
 	    	// unique user ?
-	    	$unique = $em->getRepository('WebShopBundle:User')->isUserUnique($user->getUsername(), $user->getEmail());
+	    	$unique = $em->getRepository('DistSysShopBundle:User')->isUserUnique($user->getUsername(), $user->getEmail());
 	      // Wenn neuer User, dann Anlegen
 				if ($unique){
 						
 					// Rolle für den USer setzen
-					$role = $em->getRepository('WebShopBundle:Role')->findOneByName('ROLE_USER');
+					$role = $em->getRepository('DistSysShopBundle:Role')->findOneByName('ROLE_USER');
 		      $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
 		        // Passwort setzen
 		      $password = $encoder->encodePassword($user->getPassword(), $user->getSalt());
@@ -107,22 +110,14 @@ class SecurityController extends Controller
 		        
 		      $em->persist($user);
 		        
-		      // Adresse für User anlegen  
-		      $adress = new Adress();
-				  $adress->setUser($user);
-		      $em->persist($adress);
 		      
-          // Warenkorb für USer anlegen
-		      $cart = new Cart();
-		      $cart->setUser($user);
-		      $em->persist($cart);
 	
 
 		        
 		      $em->flush();
 		        
 		      // Willkommens Email an User vershcicken
-		      	        
+		      	        /*
 		      $message = \Swift_Message::newInstance()     // we create a new instance of the Swift_Message class
 		        					->setSubject('Scheiben-Bude.de.vu')     // we configure the title
 		        	        ->setFrom('notification@scheiben-bude.de.vu')     // we configure the sender
@@ -136,7 +131,7 @@ class SecurityController extends Controller
 		        // and we pass the $name variable to the text template which serves as a body of the message
 		        ;
 		      $this->get('mailer')->send($message);     // then we send the message.
-		        
+		        */
 	     		//return array( );
 		
 		      return array('user' => $user);
@@ -145,7 +140,7 @@ class SecurityController extends Controller
 				
 	    }
 	
-			return $this->render('WebShopBundle:Security:register.html.twig', array(
+			return $this->render('DistSysShopBundle:Security:register.html.twig', array(
 					'user' => $user,
 					'form' => $form->createView(),
 					'error' => "Email oder Username schon registriert!"

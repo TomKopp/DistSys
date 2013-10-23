@@ -15,6 +15,10 @@ register:
     pattern:  /register
     defaults: { _controller: DistSysShopBundle:Security:register }
     
+create:
+    pattern:  /create
+    defaults: { _controller: DistSysShopBundle:Security:create }
+    
 
 logout:
     pattern:  /logout

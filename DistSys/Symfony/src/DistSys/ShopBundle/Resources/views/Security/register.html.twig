@@ -1,0 +1,42 @@
+{% extends 'DistSysShopBundle::base.html.twig' %}
+
+{% block body %}
+
+<h2 class="heading style1">Registrieren</h2>
+
+
+<form  class="form" action="{{ path('create')}}" method="post" {{ form_enctype(form) }}>
+    <div class="row">
+      <div class="span4">   
+        
+        {% if error is defined %} 
+          {{ error }}
+        {% endif %}
+
+        {{ form_label(form.user.email) }}
+        {{ form_errors(form.user.email) }}
+        {{ form_widget(form.user.email) }}
+
+        {{ form_label(form.user.username) }}
+        {{ form_errors(form.user.username) }}
+        {{ form_widget(form.user.username) }}
+
+        {{ form_label(form.user.password.password) }}
+        {{ form_errors(form.user.password.password) }}
+        {{ form_widget(form.user.password.password) }}
+
+        {{ form_label(form.user.password.confirm) }}
+        {{ form_errors(form.user.password.confirm) }}
+        {{ form_widget(form.user.password.confirm) }}
+
+        {{ form_errors(form.terms) }}
+        {{ form_widget(form.terms) }}
+        {{ form_label(form.terms) }}
+
+       <button class="btn btn-primary" type="submit">Registrieren</button>
+    </div>
+  </div>
+{{ form_end(form) }}
+
+        
+{% endblock %}
