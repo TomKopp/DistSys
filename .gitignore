@@ -1,1 +1,14 @@
 /nbproject/
+
+
+#eclipse
+
+DistSys/Symfony/.buildpath
+DistSys/Symfony/.project
+DistSys/Symfony/.settings/
+eclipse_symfony/
+DistSys/.metadata/
+
+# sosntiges
+
+*~
