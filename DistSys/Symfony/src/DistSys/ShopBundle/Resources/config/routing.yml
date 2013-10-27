@@ -1,8 +1,3 @@
-dist_sys_shop_homepage:
-    pattern:  /
-    defaults: { _controller: DistSysShopBundle:Default:index, url: 'frontpage' }
-  
-
 login:
     pattern:  /login
     defaults: { _controller: DistSysShopBundle:Security:login }
@@ -23,4 +18,11 @@ create:
 logout:
     pattern:  /logout
     defaults: { _controller: DistSysShopBundle:Security:logout }
+    
+my_cart:
+  pattern: /myCart
+  defaults: { _controller: DistSysShopBundle:Cart:index }
 
+home:
+    pattern:  /
+    defaults: { _controller: DistSysShopBundle:Default:index, url: 'frontpage' }

@@ -1,42 +1,48 @@
-{% extends 'DistSysShopBundle::base.html.twig' %}
+{% extends 'DistSysShopBundle::Scaffolding/scaffolding.html.twig' %}
 
-{% block body %}
+{% block main %}
+<h1>Registrieren</h1>
 
-<h2 class="heading style1">Registrieren</h2>
 
+<form  class="form-horizontal" action="{{ path('create')}}" method="post" {{ form_enctype(form) }}>
 
-<form  class="form" action="{{ path('create')}}" method="post" {{ form_enctype(form) }}>
-    <div class="row">
-      <div class="span4">   
-        
-        {% if error is defined %} 
-          {{ error }}
-        {% endif %}
+  {% if error is defined %} 
+    {{ error }}
+  {% endif %}
+  <div class="form-group">
+  {{ form_label(form.user.email) }}
+  {{ form_errors(form.user.email) }}
+  {{ form_widget(form.user.email) }}
+  </div>
 
-        {{ form_label(form.user.email) }}
-        {{ form_errors(form.user.email) }}
-        {{ form_widget(form.user.email) }}
+  <div class="form-group">
+  {{ form_label(form.user.username) }}
+  {{ form_errors(form.user.username) }}
+  {{ form_widget(form.user.username) }}
+  </div>
 
-        {{ form_label(form.user.username) }}
-        {{ form_errors(form.user.username) }}
-        {{ form_widget(form.user.username) }}
+  <div class="form-group">
+  {{ form_label(form.user.password.password) }}
+  {{ form_errors(form.user.password.password) }}
+  {{ form_widget(form.user.password.password) }}
+  </div>
 
-        {{ form_label(form.user.password.password) }}
-        {{ form_errors(form.user.password.password) }}
-        {{ form_widget(form.user.password.password) }}
+  <div class="form-group">
+  {{ form_label(form.user.password.confirm) }}
+  {{ form_errors(form.user.password.confirm) }}
+  {{ form_widget(form.user.password.confirm) }}
+  </div>
 
-        {{ form_label(form.user.password.confirm) }}
-        {{ form_errors(form.user.password.confirm) }}
-        {{ form_widget(form.user.password.confirm) }}
+  <div class="form-group">
+  {{ form_errors(form.terms) }}
+  {{ form_widget(form.terms) }}
+  {{ form_label(form.terms) }}
+  </div>
 
-        {{ form_errors(form.terms) }}
-        {{ form_widget(form.terms) }}
-        {{ form_label(form.terms) }}
-
-       <button class="btn btn-primary" type="submit">Registrieren</button>
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <button class="btn btn-primary" type="submit">Registrieren</button>
     </div>
   </div>
 {{ form_end(form) }}
-
-        
 {% endblock %}

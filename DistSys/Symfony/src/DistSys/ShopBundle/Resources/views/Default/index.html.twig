@@ -1,11 +1,11 @@
-{% extends 'DistSysShopBundle::base.html.twig' %}
+{% extends 'DistSysShopBundle::Scaffolding/scaffolding.html.twig' %}
 
-{% block body %}
-          Hello {{ name }}!
-          
-          {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-          <a href="{{ path('login') }}">login</a>
-          {% else %}
-          <a href="{{ path('logout') }}">logout</a>
-          {% endif %}
+{% block main %}
+Hello {{ name }}!
+
+{% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+<a href="{{ path('login') }}">login</a>
+{% else %}
+<a href="{{ path('logout') }}">logout</a>
+{% endif %}
 {% endblock %}

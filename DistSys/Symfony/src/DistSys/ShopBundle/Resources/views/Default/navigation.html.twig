@@ -2,48 +2,49 @@
 
 {% block navigation %}
 {% set routeParam = app.request.getPathInfo() %}
-{#{% set routeParam = app.request.get('headingId') %}#}
-<ul class="horizontal-list">
-  <li class="hl-lvl-0">
-    <a href="{{ path('schmucklisHome') }}" title="Start" class="{% if path('schmucklisHome') is sameas(routeParam) %}active{% endif %}">Start</a>
+{#{% set routeParam = app.request.get('categoryId') %}#}
+<ul class="nav navbar-nav">
+  <li>
+    <a href="{{ path('home') }}" title="Start" class="{% if path('home') is sameas(routeParam) %}active{% endif %}">Start</a>
   </li>
 
-  <li class="hl-lvl-0">
-    <a href="{{ path( 'schmucklisShowHeading', {'headingId': headings|first.id|e} ) }}" title="Produkte" class="{#% if path('schmucklisShowAllProducts') is sameas(routeParam) %}text-highlight-color{% endif %#}">Produkte</a>
-    <ul>
-      {% for heading in headings %}
-      <li class="hl-lvl-1">
-        <a class="{# {% if heading.id == routeParam %}active{% endif %} #}{% if heading.active %}{{active}}{% endif %}" href="{{ path( 'schmucklisShowHeading', {'headingId': heading.id|e} ) }}">{{ heading.attributename }}</a>
+  <li class="dropdown">
+    <a href="{{ path( 'category', {'categoryId': categories|first.id|e} ) }}" title="Produkte" data-toggle="dropdown" class="dropdown-toggle {#% if path('schmucklisShowAllProducts') is sameas(routeParam) %}text-highlight-color{% endif %#}">Produkte</a>
+    <ul class="dropdown-menu">
+      {% for category in categories %}
+      <li>
+        <a class="{% if category.active %}{{active}}{% endif %}" href="{{ path( 'category', {'categoryId': category.id|e} ) }}">{{ category.attributename }}</a>
       </li>
       {% else %}
-      <li class="hl-lvl-1">
+      <li>
         <p>No Categories found</p>
       </li>
       {% endfor %}
     </ul>
   </li>
 
+  {#
   <li class="hl-lvl-0">
     <a href="{{ path('schmucklisHome', {'url': 'faq'}) }}" title="FAQs" class="{% if path('schmucklisHome', {'url': 'faq'}) is sameas(routeParam) %}active{% endif %}">FAQs</a>
   </li>
-
-  <li class="hl-lvl-0">
-    <a href="{{ path('schmucklisContact') }}" title="Kontakt" class="{% if path('schmucklisContact') is sameas(routeParam) %}active{% endif %}">Kontakt</a>
+#}
+  <li>
+    <a href="{{ path('contact') }}" title="Kontakt">Kontakt</a>
   </li>
 
   {% if is_granted('ROLE_USER') %}
-  <li class="hl-lvl-0">
-    <a href="{{ path ('schmucklisUserAccount') }}" title="Mein Konto">Mein Konto</a>    
+  <li>
+    <a href="{{ path ('userAccount') }}" title="Mein Konto">Mein Konto</a>    
     <ul>
-      <li class="hl-lvl-1">
-        <a class="{% if path('schmucklisUserData') is sameas(routeParam) %}active{% endif %}" href="{{ path( 'schmucklisUserData') }}">Meine Daten</a>
+      <li>
+        <a href="{{ path('userData') }}">Meine Daten</a>
       </li>
-      <li class="hl-lvl-1">
-        <a class="{% if path('schmucklisUserOrders') is sameas(routeParam) %}active{% endif %}" href="{{ path( 'schmucklisUserOrders') }}">Meine Bestellungen</a>
+      <li>
+        <a href="{{ path('userOrders') }}">Meine Bestellungen</a>
       </li>
     </ul>
   </li>  
   {% endif %} 
 
-</ul>
+</ul>{# /.nav .navbar-nav #}
 {% endblock %}

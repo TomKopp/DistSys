@@ -1,36 +1,54 @@
-{% extends 'DistSysShopBundle::base.html.twig' %}
+{% extends 'DistSysShopBundle::Scaffolding/scaffolding.html.twig' %}
 
-{% block body %}
+{% block main %}
 
+
+
+
+<form class="form-signin" action="{{ path('login_check') }}" method="post">
+  <h1 class="form-signin-heading">Login</h1>
+  {% if error %}
+  <p>{{ error.message }}</p>
+  {% endif %}
+  <input type="text" name="_username" value="{{ last_username }}" autofocus="" placeholder="Benutzername" class="form-control">
+  <input type="password" name="_password" placeholder="Passwort" class="form-control">
+  <label class="checkbox">
+    <input type="checkbox" value="_remember_me" name="_remember_me" checked> Remember me
+  </label>
+  <button type="submit" class="btn btn-lg btn-primary btn-block">Login</button>
+</form>
+
+
+
+
+{#
 <h2 class="heading style1">Login</h2>
         {% if error %}
-            <div>{{ error.message }}</div>
+<div>{{ error.message }}</div>
         {% endif %}
-        
-        
-        
-        <form   class="form" action="{{ path('login_check') }}" method="post">
-    <div class="cols">
-      <div class="col c6of12">    
-                        
-                                <label class="label" for="username">Username:</label> 
-                                <input class="input" type="text" id="username" name="_username" value="{{ last_username }}" />
-                                
-                                <label class="label" for="password">Password:</label> 
-                                <input class="input" type="password" id="password" name="_password" />
-                                
-                                <label class="label" for="remember_me">Keep me logged in</label> 
-                                <input class="checkbox" type="checkbox" id="remember_me" name="_remember_me" checked />
-                  
-
-            <button class="btn form-btn" type="submit">Login</button>
-            </div>
-            </div>
-        </form>
-        
-        <p>
-                <a href="{{ path('register') }}"> Noch kein Kunde?</a>
-        </p>
 
 
+
+<form   class="form" action="{{ path('login_check') }}" method="post">
+  <div class="cols">
+    <div class="col c6of12">    
+
+      <label class="label" for="username">Username:</label> 
+      <input class="input" type="text" id="username" name="_username" value="{{ last_username }}" />
+
+      <label class="label" for="password">Password:</label> 
+      <input class="input" type="password" id="password" name="_password" />
+
+      <label class="label" for="remember_me">Keep me logged in</label> 
+      <input class="checkbox" type="checkbox" id="remember_me" name="_remember_me" checked />
+
+
+      <button class="btn form-btn" type="submit">Login</button>
+    </div>
+  </div>
+</form>#}
+
+<p>
+  <a href="{{ path('register') }}">Noch kein Kunde?</a>
+</p>
 {% endblock %}

@@ -1,47 +1,76 @@
 {# header block#}
 
 {% block header %}
-<a href="{{ path('schmucklisHome') }}" title="Home" class="logo">
-  <img src="{{ asset('bundles/schmucklisshop/logo.png') }}" alt="logo" title="Home">
-</a>
-<nav>
-{% render(controller('DistSysShopBundle:Navigation:index')) %}
-</nav>
-<div class="top-links">
-  <div class="login">
+<div class="container">
+  <div class="navbar-header">
+    <a href="{{ path('home') }}" title="Home" class="logo">
+      <img src="{{ asset('bundles/distsysshop/logo.png') }}" alt="logo" title="Home">
+    </a>
+  </div>{#  /.navbar-header #}
+
+  <div class="navbar-collapse collapse">
+    <nav>
+{#    {% render(controller('DistSysShopBundle:Navigation:index')) %}#}
+    </nav>
+
+
+    <a href="{{ path ('my_cart') }}" title="Cart" class="btn btn-default navbar-btn navbar-right">Warenkorb</a>
+
+    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+    <a class="btn btn-info navbar-btn navbar-right" href="{{ path('register') }}">Registrieren</a>
+    <form class="navbar-form navbar-right">
+      <div class="form-group">
+        <input type="text" class="form-control" placeholder="Email">
+      </div>
+      <div class="form-group">
+        <input type="password" class="form-control" placeholder="Password">
+      </div>
+      <button class="btn btn-success" type="submit">Login</button>
+    </form>
+    {% else %}
+    <a class="btn btn-info navbar-btn navbar-right" href="{{ path('logout') }}">Logout</a>
+    {% endif %}
+
+    {#
+    <div class="top-links">
+      <div class="login">
     {% if is_granted('ROLE_USER') %}
-    <a href="{{ path ('schmucklisLogout') }}" title="Logout">Logout</a>       
+        <a href="{{ path ('logout') }}" title="Logout">Logout</a>       
     {% else %}       
-    <a href="{{ path ('schmucklisLogin') }}" title="Login">Login</a> 
-    <a href="{{ path ('schmucklis_register') }}" title="Registrieren">Registrieren</a>
+        <a href="{{ path ('login') }}" title="Login">Login</a> 
+        <a href="{{ path ('register') }}" title="Registrieren">Registrieren</a>
     {% endif %} 
-  </div>
-  <div class="cart">
-    <a href="{{ path ('schmucklisCartShow') }}" title="Cart" class="cart-link">
+      </div>
+      <div class="cart">
+        <a href="{{ path ('cartShow') }}" title="Cart" class="cart-link">
       {% set cartAmount = app.session.get('cartAmount') %}      
       {% set priceComplete = app.session.get('priceComplete') %}
       {% if cartAmount > 0 %}
-      <span>
+          <span>
         {{ cartAmount }} Artikel<br>
         {{ priceComplete |number_format(2,',', '.' )}} €
-      </span>
-      <span class="ico cart-full">&nbsp</span>
+          </span>
+          <span class="ico cart-full">&nbsp</span>
       {% else %}
-      <span>
-        0 Artikel<br>
-        0,00 €
-      </span>
-      <span class="ico">&nbsp</span>
+          <span>
+            0 Artikel<br>
+            0,00 €
+          </span>
+          <span class="ico">&nbsp</span>
       {% endif %}
-    </a>
-  </div>
-  <div class="quick-search">
-    <form action="{{ path('schmucklisSearchResult') }}" method="post">
-      <!--<input type="text" id="search" name="search" value="Suchbegriff eingeben..." onclick="if (this.value && this.value === this.defaultValue)
-            this.value = '';">-->
-      <input type="text" id="search" name="search" placeholder="Suchbegriff eingeben..." value="">
-      <button type="submit">Suche</button>
-    </form>
-  </div>
-</div>
+        </a>
+      </div>
+      <div class="quick-search">
+        <form action="{{ path('searchResult') }}" method="post">
+          <!--<input type="text" id="search" name="search" value="Suchbegriff eingeben..." onclick="if (this.value && this.value === this.defaultValue)
+                this.value = '';">-->
+          <input type="text" id="search" name="search" placeholder="Suchbegriff eingeben..." value="">
+          <button type="submit">Suche</button>
+        </form>
+      </div>
+    </div>#}{#  /.top-links #}
+
+  </div>{#  /.navbar-collapse collapse #}
+
+</div>{#  /.container #}
 {% endblock %}
