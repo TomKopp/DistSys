@@ -3,6 +3,8 @@
 {% block main %}
 <h1>Registrieren</h1>
 
+<div class="row">
+	<div class="col-lg-8">
 
 <form  class="form-horizontal" action="{{ path('create')}}" method="post" {{ form_enctype(form) }}>
 
@@ -44,5 +46,8 @@
       <button class="btn btn-primary" type="submit">Registrieren</button>
     </div>
   </div>
+  
+	</div>
+</div>
 {{ form_end(form) }}
 {% endblock %}

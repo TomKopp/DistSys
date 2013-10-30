@@ -4,16 +4,12 @@ namespace DistSys\ShopBundle\Controller;
 
 
 use DistSys\ShopBundle\Form\Model\Registration;
-
 use DistSys\ShopBundle\Form\Type\RegistrationType;
-
 use DistSys\ShopBundle\Repository;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-
-
 use Symfony\Component\Security\Core\SecurityContext;
 
 
@@ -24,7 +20,7 @@ class SecurityController extends Controller
 	 */
     public function loginAction()
     {
-			// Session laden
+		// Session laden
     	
     	$request = $this->getRequest();
     	$session = $request->getSession();
@@ -32,7 +28,7 @@ class SecurityController extends Controller
     	// get the login error if there is one
     	if ($request->attributes->has(SecurityContext::AUTHENTICATION_ERROR)) {
     		$error = $request->attributes->get(
-    				SecurityContext::AUTHENTICATION_ERROR
+    		  SecurityContext::AUTHENTICATION_ERROR
     		);
     	} else {
     		$error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
@@ -50,7 +46,6 @@ class SecurityController extends Controller
     }
     
     public function loginCheckAction(){
- 
     	// The security layer will intercept this request
     }
     
@@ -71,7 +66,7 @@ class SecurityController extends Controller
             new RegistrationType(),
             new Registration()
         );
-				// Formular an View übergeben
+		// Formular an View übergeben
         return array('form' => $form->createView());
     }
     
@@ -116,23 +111,6 @@ class SecurityController extends Controller
 		        
 		      $em->flush();
 		        
-		      // Willkommens Email an User vershcicken
-		      	        /*
-		      $message = \Swift_Message::newInstance()     // we create a new instance of the Swift_Message class
-		        					->setSubject('Scheiben-Bude.de.vu')     // we configure the title
-		        	        ->setFrom('notification@scheiben-bude.de.vu')     // we configure the sender
-		        	        ->setTo($user->getEmail())     // we configure the recipient
-		        	        ->setBody(
-		        	        		$this->renderView('WebShopBundle:Security:register.email.html.twig', 
-		        	        				              array( 'user' => $user)),
-		        	        		'text/html'
-		        	        		)
-		        
-		        // and we pass the $name variable to the text template which serves as a body of the message
-		        ;
-		      $this->get('mailer')->send($message);     // then we send the message.
-		        */
-	     		//return array( );
 		
 		      return array('user' => $user);
 				}
