@@ -30,6 +30,35 @@ class UserController extends Controller {
 				   );
 	}
 	
+	public function updateAction(Request $request){
+	
+		$user = $this->get('security.context')->getToken()->getUser();
+		$em = $this->getDoctrine()->getManager();
+		$form = $this->createForm( new ProfileType(), $user );
+		$form->bind($this->getRequest());
+	
+    // Speichern, wenn das Formular Valid ist
+    if ($form->isValid()) {
+         $user = $form->getData();
+
+
+                
+         // Adresse in die Datenbank speichern
+         $em->persist($user);
+         $em->flush();
+                        
+         // Weiterleitung zur Übersicht 
+         $res = true;
+         $status = "Benutzerdaten erfolgreich geändert.";
+      }else {
+      	// Zurück mit Fehlerausgabe
+      	$res = false;
+        $status = "Bitte füllen Sie alle benötigten Felder aus.";
+      }
+	
+		return new JsonResponse(array('res' => $res, 'status' => $status));
+	}
+	
 
 	public function passwordAction(Request $request){
 	

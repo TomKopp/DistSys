@@ -44,5 +44,22 @@ $(document).ready(function(){
  
     return false;
   });
+  
+  $("#profile-form").submit( function( e ){
+	    e.preventDefault();
+	    postForm( $(this), function( response ){
+	      $('.res').html(response.status);
+	      if (response.res){
+	    	  $('.res').addClass("text-success");
+	    	  $('.res').removeClass("text-danger");
+	      }else {
+	    	  $('.res').removeClass("text-success");
+	    	  $('.res').addClass("text-danger");
+	      }
+	      
+	    });
+	 
+	    return false;
+	  });
 	 
 });
