@@ -33,11 +33,13 @@
 	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user.username }}<b class="caret"></b></a>
 	      <ul class="dropdown-menu">
 		      <li class="dropdown-header">User Control Panel</li>
-		      <li><a href="#">Action</a></li>
+		      <li><a href="{{ path('user') }}">Nutzerdaten</a></li>
+		      <li><a href="{{ path('user_password') }}">Passwort</a></li>
 		      {% if is_granted('ROLE_ADMIN') %}
 		      <li class="divider"></li>
 		      <li class="dropdown-header">Admin Control Panel</li>
-		      <li><a href="#">Separated link</a></li>
+		      <li><a href="#">Produkte</a></li>
+		      <li><a href="#">Kategorien</a></li>
 		      {% endif %}
 		      <li class="divider"></li>
 		      <li><a href="{{ path('logout') }}">Logout</a></li>

@@ -3,8 +3,6 @@
 {% block main %}
 <h1>Registrieren</h1>
 
-<div class="row">
-	<div class="col-lg-8">
 
 <form  class="form-horizontal" action="{{ path('create')}}" method="post" {{ form_enctype(form) }}>
 
@@ -14,25 +12,33 @@
   <div class="form-group">
   {{ form_label(form.user.email) }}
   {{ form_errors(form.user.email) }}
+		  <div class="col-lg-5">
   {{ form_widget(form.user.email) }}
+		  </div>
   </div>
 
   <div class="form-group">
   {{ form_label(form.user.username) }}
   {{ form_errors(form.user.username) }}
+		  <div class="col-lg-5">
   {{ form_widget(form.user.username) }}
+		  </div>
   </div>
 
   <div class="form-group">
   {{ form_label(form.user.password.password) }}
   {{ form_errors(form.user.password.password) }}
+		  <div class="col-lg-5">
   {{ form_widget(form.user.password.password) }}
+		  </div>
   </div>
 
   <div class="form-group">
   {{ form_label(form.user.password.confirm) }}
   {{ form_errors(form.user.password.confirm) }}
+		  <div class="col-lg-5">
   {{ form_widget(form.user.password.confirm) }}
+		  </div>
   </div>
 
   <div class="form-group">
@@ -47,7 +53,6 @@
     </div>
   </div>
   
-	</div>
-</div>
+
 {{ form_end(form) }}
 {% endblock %}

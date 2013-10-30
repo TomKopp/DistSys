@@ -30,8 +30,20 @@
 {#      {% embed 'DistSysShopBundle:Scaffolding:footer.html.twig' %}{% endembed %}#}
     </footer>
     {% block javascripts %}
+    
+    
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    
+	  {% javascripts 
+	      '@DistSysShopBundle/Resources/public/js/main.js'
+        filter='yui_js' 
+        output='js/min.js'
+    %}
+      <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
     {% endblock %}
+    
+    
   </body>
 </html>

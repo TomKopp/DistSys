@@ -2,11 +2,87 @@
 
 namespace DistSys\ShopBundle\Controller;
 
+use DistSys\ShopBundle\Form\Type\ProfileType;
+
+use DistSys\ShopBundle\Form\Type\PasswordType;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use schmucklis\ShopBundle\Entity\Wishlist;
 use schmucklis\ShopBundle\Entity\WishlistItem;
 
+
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 class UserController extends Controller {
+	
+	public function indexAction(){
+		
+		$user = $this->get('security.context')->getToken()->getUser();
+		$em = $this->getDoctrine()->getManager();
+		$profileForm = $this->createForm( new ProfileType(), $user );
+		
+	
+		return $this->render('DistSysShopBundle:User:index.html.twig', 
+				       array('user' => $user,
+				       		   'profileform' => $profileForm->createView()
+				       		  )
+				   );
+	}
+	
+
+	public function passwordAction(Request $request){
+	
+		$user = $this->get('security.context')->getToken()->getUser();
+		$passwordForm = $this->createForm( new PasswordType() );
+		
+	
+		return $this->render('DistSysShopBundle:User:password.html.twig', 
+				       array('user' => $user,
+				       		   'postform' => $passwordForm->createView()
+				       		  )
+				   );
+	}
+	
+	public function passwordUpdateAction(Request $request){
+	
+		// User Session 
+    $user = $this->get('security.context')->getToken()->getUser();
+    $em = $this->getDoctrine()->getManager();
+                                
+    // Formular initialisieren
+    $form = $this->createForm(new PasswordType());
+    $form->bind($this->getRequest());
+                
+    // Speichern, wenn das Formular Valid ist
+    if ($form->isValid()) {
+         $pass = $form->getData();
+
+                        
+         $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+         //Neues Passwort für den Benutzer erzuegen
+         $password = $encoder->encodePassword($pass['password'], $user->getSalt());
+        
+         // Passwort verschlüsselt in der Datenbank speichern
+         $user->setPassword($password);
+                
+         // Adresse in die Datenbank speichern
+         $em->persist($user);
+         $em->flush();
+                        
+         // Weiterleitung zur Übersicht 
+         $res = true;
+         $status = "Passwort erfolgreich geändert.";
+      }else {
+      	// Zurück mit Fehlerausgabe
+      	$res = false;
+        $status = "Bitte geben sie 2 gleiche Passwörter ein";
+      }
+	
+		return new JsonResponse(array('res' => $res, 'status' => $status));
+	}
+	
+	
   #basic function to show user data
   public function showAction($userId) {
     $repository = $this->getDoctrine()->getRepository('schmucklisShopBundle:User');
