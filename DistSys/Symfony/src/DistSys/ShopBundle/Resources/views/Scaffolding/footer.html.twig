@@ -1,7 +1,7 @@
 {%block footer %}
 {% set routeParam = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
 
-<ul class="horizontal-list">
+<ul class="nav navbar-nav">
   <li class="hl-lvl-0">
     <a href="{{ path('home', {'url': 'agb'}) }}" title="AGB" class="{% if path('home', {'url': 'agb'}) is sameas(routeParam) %}text-highlight-color{% endif %}">AGBs</a>
   </li>
