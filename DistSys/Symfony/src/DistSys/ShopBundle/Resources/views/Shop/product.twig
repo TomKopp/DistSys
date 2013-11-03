@@ -16,7 +16,7 @@
       <p>{{ product.description }}</p>
       <ul>
       {% for categoryName, category in categories %}
-        {% if categoryName is not sameas('ShopKategorie') %}
+        {% if categoryName is not sameas('category') %}
         <li>
           <p>{{ categoryName }}: 
           {% for attribute in category %}

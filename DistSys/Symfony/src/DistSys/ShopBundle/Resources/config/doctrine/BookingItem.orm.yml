@@ -13,8 +13,11 @@ DistSys\ShopBundle\Entity\BookingItem:
   fields:
     quatity:
       type: integer
-    
-  oneToOne:
+
+  manyToOne:
+    booking:
+      targetEntity: Booking
+      inversedBy: bookingItems
     product:
       targetEntity: Product
-      mappedBy: id
+      inversedBy: bookingItem

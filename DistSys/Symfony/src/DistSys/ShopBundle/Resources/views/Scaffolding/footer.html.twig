@@ -1,17 +1,18 @@
 {%block footer %}
-{% set routeParam = app.request.getPathInfo() %}
+{% set routeParam = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}
+
 <ul class="horizontal-list">
   <li class="hl-lvl-0">
-    <a href="{{ path('schmucklisHome', {'url': 'agb'}) }}" title="AGB" class="{% if path('schmucklisHome', {'url': 'agb'}) is sameas(routeParam) %}text-highlight-color{% endif %}">AGBs</a>
+    <a href="{{ path('home', {'url': 'agb'}) }}" title="AGB" class="{% if path('home', {'url': 'agb'}) is sameas(routeParam) %}text-highlight-color{% endif %}">AGBs</a>
   </li>
   <li class="hl-lvl-0">
-    <a href="{{ path('schmucklisHome', {'url': 'cancellationpolicy'}) }}" title="Widerrufsbelehrung" class="{% if path('schmucklisHome', {'url': 'cancellationpolicy'}) is sameas(routeParam) %}text-highlight-color{% endif %}">Widerrufsbelehrung</a>
+    <a href="{{ path('home', {'url': 'cancellationpolicy'}) }}" title="Widerrufsbelehrung" class="{% if path('home', {'url': 'cancellationpolicy'}) is sameas(routeParam) %}text-highlight-color{% endif %}">Widerrufsbelehrung</a>
   </li>
   <li class="hl-lvl-0">
-    <a href="{{ path('schmucklisHome', {'url': 'privacypolicy'}) }}" title="Datenschutz" class="{% if path('schmucklisHome', {'url': 'privacypolicy'}) is sameas(routeParam) %}text-highlight-color{% endif %}">Datensicherheit/Datenschutz</a>
+    <a href="{{ path('home', {'url': 'privacypolicy'}) }}" title="Datenschutz" class="{% if path('home', {'url': 'privacypolicy'}) is sameas(routeParam) %}text-highlight-color{% endif %}">Datensicherheit/Datenschutz</a>
   </li>
   <li class="hl-lvl-0">
-    <a href="{{ path('schmucklisHome', {'url': 'imprint'}) }}" title="Impressum" class="{% if path('schmucklisHome', {'url': 'imprint'}) is sameas(routeParam) %}text-highlight-color{% endif %}">Impressum</a>
+    <a href="{{ path('home', {'url': 'imprint'}) }}" title="Impressum" class="{% if path('home', {'url': 'imprint'}) is sameas(routeParam) %}text-highlight-color{% endif %}">Impressum</a>
   </li>
 </ul>
 {%endblock %}

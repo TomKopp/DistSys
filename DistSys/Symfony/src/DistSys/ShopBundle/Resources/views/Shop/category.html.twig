@@ -33,15 +33,15 @@
   {% for key, site in pagination %}
   {% if not(loop.first and site.active) %}
   <li>
-    <a class="prev" href="{{ path('DistSysShowHeading', {'categoryId': categoryId, 'pagination': key-1}) }}"> {{ '<<'|e }}</a>
+    <a class="prev" href="{{ path('DistSysShowHeading', {'categoryId': categoryId, 'pagination': key-1}) }}">&laquo;</a>
   </li>
   {% endif %}
-  <li>
-    <a href="{{ path('DistSysShowHeading', {'categoryId': categoryId, 'pagination': key}) }}" class="{% if site.active %}active{% endif %}">{{ site|e }}</a>
+  <li class="{% if site.active %}active{% endif %}">
+    <a href="{{ path('DistSysShowHeading', {'categoryId': categoryId, 'pagination': key}) }}">{{ site|e }}</a>
   </li>
   {% if not(loop.last and site.active) %}
   <li>
-    <a class="next" href="{{ path('DistSysShowHeading', {'categoryId': categoryId, 'pagination': key+1}) }}"> {{ '<<'|e }}</a>
+    <a class="next" href="{{ path('DistSysShowHeading', {'categoryId': categoryId, 'pagination': key+1}) }}">&raquo;</a>
   </li>
   {% endif %}
   {% endfor %}

@@ -20,6 +20,11 @@ class BookingItem
     private $quatity;
 
     /**
+     * @var \DistSys\ShopBundle\Entity\Booking
+     */
+    private $booking;
+
+    /**
      * @var \DistSys\ShopBundle\Entity\Product
      */
     private $product;
@@ -56,6 +61,29 @@ class BookingItem
     public function getQuatity()
     {
         return $this->quatity;
+    }
+
+    /**
+     * Set booking
+     *
+     * @param \DistSys\ShopBundle\Entity\Booking $booking
+     * @return BookingItem
+     */
+    public function setBooking(\DistSys\ShopBundle\Entity\Booking $booking = null)
+    {
+        $this->booking = $booking;
+    
+        return $this;
+    }
+
+    /**
+     * Get booking
+     *
+     * @return \DistSys\ShopBundle\Entity\Booking 
+     */
+    public function getBooking()
+    {
+        return $this->booking;
     }
 
     /**

@@ -18,8 +18,7 @@ class ShopController extends Controller {
     $request = $this->getRequest();
 
     // Pagination
-    //this or $em?
-    $allProductsInCategory = $this->getRepository('DistSysShopBundle:Product')->getProductsByAttributes($categoryId);
+    $allProductsInCategory = $em->getRepository('DistSysShopBundle:Product')->getProductsByAttributes($categoryId);
     $request->get('pagination') ? $currentSite = $request->get('pagination') : $currentSite = 0;
     for ($i = 0; ciel(count($allProductsInCategory) / $prodQantityPerSite); $i++) {
       if ($currentSite === $i) {
@@ -29,8 +28,8 @@ class ShopController extends Controller {
       }
     }
 
+    $products = $em->getRepository('DistSysShopBundle:Product')->getProductsByAttributes($categoryId, array('offset' => ($currentSite * $prodQantityPerSite), 'limit' => $prodQantityPerSite));
 
-    $products = $em->getRepository('DistSysShopBundle:Product')->getProductsByAttributes($categoryId, array('offset' => ($currentSite * $prodQantityPerSite), 'limit' => 8));
     return $this->render(
         'DistSysShopBundle:Shop:category.html.twig', array(
         'products' => $products,
@@ -46,21 +45,21 @@ class ShopController extends Controller {
    * @param type $productId
    * @return render twig
    */
-  public function showProductDetailAction($productId) {
+  public function showProductAction($productId) {
     $to_render = array();
-    $doctrine = $this->getDoctrine();
-    $repository = $doctrine->getRepository('DistSysShopBundle:Product');
-    $to_render['product'] = $repository->find($productId);
+    $to_render['product'] = $this->getDoctrine()->getRepository('DistSysShopBundle:Product')->find($productId);
     $to_render['lastUrl'] = $this->getRequest()->headers->get('referer');
 
-    # get Array for Attributes, sorted by Category
-//    $attributeArray = array();
-    $attributes = $to_render['product']->getAttributes();
-    foreach ($attributes as $attribute) {
-      $categories[$attribute->getCategory()->getCategoryName()][] = $attribute;
+    // get Array for Attributes, sorted by Category
+//    $attributes = $to_render['product']->getAttributes();
+//    foreach ($attributes as $attribute) {
+//      $categories[$attribute->getCategory()->getCategoryName()][] = $attribute;
+//    }
+//    $to_render['categories'] = $categories;
+    
+    foreach ($to_render['product']->getAttributes() as $attribute) {
+      $to_render['categories'][$attribute->getAttributeType()->getName()][] = $attribute;
     }
-
-    $to_render['categories'] = $categories;
 
     return $this->render('DistSysShopBundle:Shop:productDetail.html.twig', $to_render);
   }
@@ -70,12 +69,12 @@ class ShopController extends Controller {
   public function searchResultAction() {
     $request = $this->getRequest();
     $session = $this->getRequest()->getSession();
-    $em = $this->getDoctrine()->getManager();
-    #save search in sessionvariable to conserve the result in case of "back" from a product detail...
+    // save search in sessionvariable to conserve the result in case of "back" from a product detail...
     if (!$session->has('search')) {
       $session->set('search', '');
     }
-    #search string should not start with a space
+    
+    // search string should not start with a space
     if (trim($request->get('search')) != '') {
       $session->set('search', trim($request->get('search')));
     }
@@ -180,9 +179,10 @@ class ShopController extends Controller {
    * @return render twig
    */
   public function renderSliderAction() {
-    $categories = $this->getDoctrine()->getRepository('DistSysShopBundle:Attribute')->findByCategory(6);
+//    $categories = $this->getDoctrine()->getRepository('DistSysShopBundle:Attribute')->findByCategory(6);
+    $categories = $this->getDoctrine()->getRepository('DistSysShopBundle:Attribute')->findByAttributeType(2);
     foreach ($categories as $category) {
-      $products[$category->getAttributename()] = $this->getDoctrine()->getRepository('DistSysShopBundle:Product')->getProductsByAttributes($category, array('limit' => 4));
+      $products[$category->getName()] = $this->getDoctrine()->getRepository('DistSysShopBundle:Product')->getProductsByAttributes($category->getId(), array('limit' => 4));
     }
 
     return $this->render('DistSysShopBundle:Default:slider.html.twig', array('categories' => $products));

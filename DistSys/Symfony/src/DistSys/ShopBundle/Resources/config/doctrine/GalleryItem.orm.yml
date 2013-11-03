@@ -19,8 +19,13 @@ DistSys\ShopBundle\Entity\GalleryItem:
       type: string
     file:
       - File:
-        maxSize: 
-          
+        maxSize: 8M
+
+  manyToOne:
+    product:
+      targetEntity: Product
+      inversedBy: galleryItems
+
   lifecycleCallbacks:
     prePersist: [preUpload]
     postPersist: [uploadFile]

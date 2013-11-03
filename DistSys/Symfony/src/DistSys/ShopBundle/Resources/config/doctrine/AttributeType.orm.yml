@@ -1,6 +1,7 @@
 DistSys\ShopBundle\Entity\AttributeType:
   
   type: entity
+  repositoryClass: DistSys\ShopBundle\Entity\Repository\AttributeTypeRepository
   
   table: attributeTypes
   

@@ -36,12 +36,23 @@ user_password:
 user_password_update:
     pattern:  /user/password/update
     defaults: { _controller: DistSysShopBundle:User:passwordUpdate }
+    
+#user_account:
+#  
+#user_data:
+#  
+#user_orders:
 # end
     
 my_cart:
   pattern: /myCart
   defaults: { _controller: DistSysShopBundle:Cart:index }
+  
+# shop
+category:
+  pattern: /category/{categoryId}
+  defaults: { _controller: DistSysShopBundle:Default:index, url: 'frontpage' }
 
 home:
-    pattern:  /
+    pattern:  /{url}
     defaults: { _controller: DistSysShopBundle:Default:index, url: 'frontpage' }

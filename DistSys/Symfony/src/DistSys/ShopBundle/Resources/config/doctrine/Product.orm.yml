@@ -1,6 +1,7 @@
 DistSys\ShopBundle\Entity\Product:
   
   type: entity
+  repositoryClass: DistSys\ShopBundle\Entity\Repository\ProductRepository
   
   table: products
   
@@ -26,13 +27,16 @@ DistSys\ShopBundle\Entity\Product:
       nullable: false
     status:
       type: boolean
-      
+
   oneToMany:
     galleryItems:
       targetEntity: GalleryItem
       mappedBy: id
       cascade: ["all"]
-      
+    bookingItems:
+      targetEntity: BookingItem
+      mappedBy: id
+
   manyToMany:
     attributes:
       targetEntity: Attribute

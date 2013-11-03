@@ -1,55 +1,17 @@
 {# header block#}
 
 {% block header %}
-<div class="container">
-  <div class="navbar-header">
-    <a href="{{ path('home') }}" title="Home" class="logo">
-      <img src="{{ asset('bundles/distsysshop/logo.png') }}" alt="logo" title="Home">
-    </a>
-  </div>{#  /.navbar-header #}
+<div class="navbar-header">
+  <a href="{{ path('home') }}" title="Home" class="logo">
+    <img src="{{ asset('bundles/distsysshop/logo.png') }}" alt="logo" title="Home">
+  </a>
+</div>{#  /.navbar-header #}
 
+<div class="container">
   <div class="navbar-collapse collapse">
     <nav>
-{#    {% render(controller('DistSysShopBundle:Navigation:index')) %}#}
+    {% render(controller('DistSysShopBundle:Navigation:index')) %}
     </nav>
-
-
-    <a href="{{ path ('my_cart') }}" title="Cart" class="btn btn-default navbar-btn navbar-right">Warenkorb</a>
-
-    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-    <a class="btn btn-info navbar-btn navbar-right" href="{{ path('register') }}">Registrieren</a>
-    <form class="navbar-form navbar-right" action="{{ path('login_check') }}" method="post">
-      <div class="form-group">
-        <input name="_username" type="text" class="form-control" placeholder="Email">
-      </div>
-      <div class="form-group">
-        <input name="_password" type="password" class="form-control" placeholder="Password">
-      </div>
-      <button class="btn btn-success" type="submit">Login</button>
-    </form>
-    {% else %}
-    <ul class="nav navbar-nav navbar-right">
-			<li class="dropdown">
-	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user.username }}<b class="caret"></b></a>
-	      <ul class="dropdown-menu">
-		      <li class="dropdown-header">User Control Panel</li>
-		      <li><a href="{{ path('user') }}">Nutzerdaten</a></li>
-		      <li><a href="{{ path('user_password') }}">Passwort</a></li>
-		      {% if is_granted('ROLE_ADMIN') %}
-		      <li class="divider"></li>
-		      <li class="dropdown-header">Admin Control Panel</li>
-		      <li><a href="#">Produkte</a></li>
-		      <li><a href="#">Kategorien</a></li>
-		      {% endif %}
-		      <li class="divider"></li>
-		      <li><a href="{{ path('logout') }}">Logout</a></li>
-	      </ul>
-	     </li>
-	   </ul>
-    
-    
-    <a class=" navbar-right" href="{{ path('logout') }}"></a>
-    {% endif %}
 
     {#
     <div class="top-links">

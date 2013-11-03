@@ -14,3 +14,6 @@ DistSys\ShopBundle\Entity\SimpleSite:
     content:
       type: text
       nullable: false
+    title:
+      type: string
+      nullable: false

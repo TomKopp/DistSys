@@ -225,4 +225,32 @@ class GalleryItem {
     }
   }
 
+    /**
+     * @var \DistSys\ShopBundle\Entity\Product
+     */
+    private $product;
+
+
+    /**
+     * Set product
+     *
+     * @param \DistSys\ShopBundle\Entity\Product $product
+     * @return GalleryItem
+     */
+    public function setProduct(\DistSys\ShopBundle\Entity\Product $product = null)
+    {
+        $this->product = $product;
+    
+        return $this;
+    }
+
+    /**
+     * Get product
+     *
+     * @return \DistSys\ShopBundle\Entity\Product 
+     */
+    public function getProduct()
+    {
+        return $this->product;
+    }
 }
