@@ -1,4 +1,4 @@
-# user zeugs
+# login zeugs
 login:
     pattern:  /login
     defaults: { _controller: DistSysShopBundle:Security:login }
@@ -20,7 +20,7 @@ logout:
     pattern:  /logout
     defaults: { _controller: DistSysShopBundle:Security:logout }
     
-    
+# profil zeugs   
     
 user:
     pattern:  /user
@@ -36,7 +36,13 @@ user_password:
 user_password_update:
     pattern:  /user/password/update
     defaults: { _controller: DistSysShopBundle:User:passwordUpdate }
-# end
+
+# order zeugs
+
+booking:
+    pattern:  /booking
+    defaults: { _controller: DistSysShopBundle:Booking:index }
+
     
 my_cart:
   pattern: /myCart

@@ -49,7 +49,7 @@ class UserController extends Controller {
                         
          // Weiterleitung zur Übersicht 
          $res = true;
-         $status = "Benutzerdaten erfolgreich geändert.";
+         $status = "Benutzerdaten erfolis_grantedgreich geändert.";
       }else {
       	// Zurück mit Fehlerausgabe
       	$res = false;
@@ -138,39 +138,6 @@ class UserController extends Controller {
     );
   }
 
-  #form to change Userdata
-  public function myDataAction() {
-    $em = $this->getDoctrine()->getManager();
-    $request = $this->getRequest();
-
-    $username = $this->get('security.context')->getToken()->getUser();
-    $user = $em->getRepository('schmucklisShopBundle:User')->findOneByEmail($username);
-    $lastUrl = $request->headers->get('referer');
-
-    #get inserted data from Form          
-    #check weather there are changes
-    #alter the user entry in the database
-    if ($request->get('_gender') && $request->get('_gender') !== $user->getGender())
-      $user->setGender($request->get('_gender'));
-    if ($request->get('_firstname') && $request->get('_firstname') !== $user->getFirstname())
-      $user->setFirstname($request->get('_firstname'));
-    if ($request->get('_lastname') && $request->get('_lastname') !== $user->getLastname())
-      $user->setLastname($request->get('_lastname'));
-    if ($request->get('_street') && $request->get('_street') !== $user->getStreet())
-      $user->setStreet($request->get('_street'));
-    if ($request->get('_postal') && $request->get('_postal') !== $user->getPostal())
-      $user->setPostal($request->get('_postal'));
-    if ($request->get('_city') && $request->get('_city') !== $user->getCity())
-      $user->setCity($request->get('_city'));
-    $em->flush();
-
-    return $this->render(
-        'schmucklisShopBundle:User:myData.html.twig', array(
-        'user' => $user,
-        'back' => $lastUrl,
-        )
-    );
-  }
 
   #show Orders
   public function myOrdersAction() {
