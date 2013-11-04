@@ -44,10 +44,22 @@ booking:
     defaults: { _controller: DistSysShopBundle:Booking:index }
 
     
+#user_account:
+#  
+#user_data:
+#  
+#user_orders:
+# end
+    
 my_cart:
   pattern: /myCart
   defaults: { _controller: DistSysShopBundle:Cart:index }
+  
+# shop
+category:
+  pattern: /category/{categoryId}
+  defaults: { _controller: DistSysShopBundle:Default:index, url: 'frontpage' }
 
 home:
-    pattern:  /
+    pattern:  /{url}
     defaults: { _controller: DistSysShopBundle:Default:index, url: 'frontpage' }

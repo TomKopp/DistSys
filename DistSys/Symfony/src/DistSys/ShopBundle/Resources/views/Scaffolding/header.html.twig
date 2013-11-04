@@ -1,16 +1,16 @@
 {# header block#}
 
 {% block header %}
-<div class="container">
-  <div class="navbar-header">
-    <a href="{{ path('home') }}" title="Home" class="logo">
-      <img src="{{ asset('bundles/distsysshop/logo.png') }}" alt="logo" title="Home">
-    </a>
-  </div>{#  /.navbar-header #}
+<div class="navbar-header">
+  <a href="{{ path('home') }}" title="Home" class="logo">
+    <img src="{{ asset('bundles/distsysshop/logo.png') }}" alt="logo" title="Home">
+  </a>
+</div>{#  /.navbar-header #}
 
+<div class="container">
   <div class="navbar-collapse collapse">
     <nav>
-{#    {% render(controller('DistSysShopBundle:Navigation:index')) %}#}
+    {% render(controller('DistSysShopBundle:Navigation:index')) %}
     </nav>
 
 
@@ -53,6 +53,7 @@
     
     <a class=" navbar-right" href="{{ path('logout') }}"></a>
     {% endif %}
+
 
     {#
     <div class="top-links">

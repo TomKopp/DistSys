@@ -17,7 +17,12 @@ class SimpleSite
     /**
      * @var string
      */
-    private $content = '';
+    private $content;
+
+    /**
+     * @var string
+     */
+    private $title;
 
 
     /**
@@ -51,5 +56,28 @@ class SimpleSite
     public function getContent()
     {
         return $this->content;
+    }
+
+    /**
+     * Set title
+     *
+     * @param string $title
+     * @return SimpleSite
+     */
+    public function setTitle($title)
+    {
+        $this->title = $title;
+    
+        return $this;
+    }
+
+    /**
+     * Get title
+     *
+     * @return string 
+     */
+    public function getTitle()
+    {
+        return $this->title;
     }
 }

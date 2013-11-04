@@ -1,7 +1,7 @@
 {% extends 'DistSysShopBundle::Scaffolding/scaffolding.html.twig' %}
 
 {% block main %}
-Hello {{ name }}!
+Hello {{ url }}!
 
 {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
 <a href="{{ path('login') }}">login</a>

@@ -10,13 +10,13 @@ class UserType extends AbstractType {
 
   public function buildForm(FormBuilderInterface $builder, array $options) {
     $builder->add('email', 'email', array(
-      'attr' => array('class' => 'col-lg-10 form-control'),
+      'attr' => array('class' => 'form-control'),
       'label' => 'Email',
       'label_attr' => array('class' => 'col-lg-2 control-label'),
       )
     );
     $builder->add('username', 'text', array(
-      'attr' => array('class' => 'col-lg-10 form-control'),
+      'attr' => array('class' => 'form-control'),
       'label' => 'Benutzername',
       'label_attr' => array('class' => 'col-lg-2 control-label'),
       )
@@ -26,11 +26,11 @@ class UserType extends AbstractType {
       'second_name' => 'confirm',
       'type' => 'password',
       'first_options' => array(
-        'attr' => array('class' => 'col-lg-10 form-control'),
+        'attr' => array('class' => 'form-control'),
         'label_attr' => array('class' => 'col-lg-2 control-label')
       ),
       'second_options' => array(
-        'attr' => array('class' => 'col-lg-10 form-control'),
+        'attr' => array('class' => 'form-control'),
         'label_attr' => array('class' => 'col-lg-2 control-label')
       ),
       )

@@ -1,50 +1,89 @@
 {# block navigation #}
 
 {% block navigation %}
-{% set routeParam = app.request.getPathInfo() %}
-{#{% set routeParam = app.request.get('categoryId') %}#}
+{#{% set routeParam = path(app.request.attributes.get('_route'), app.request.attributes.get('_route_params')) %}#}
+{% set routeParam = 'baum' %}
+
 <ul class="nav navbar-nav">
   <li>
     <a href="{{ path('home') }}" title="Start" class="{% if path('home') is sameas(routeParam) %}active{% endif %}">Start</a>
   </li>
 
   <li class="dropdown">
-    <a href="{{ path( 'category', {'categoryId': categories|first.id|e} ) }}" title="Produkte" data-toggle="dropdown" class="dropdown-toggle {#% if path('schmucklisShowAllProducts') is sameas(routeParam) %}text-highlight-color{% endif %#}">Produkte</a>
+    <a href="{{ path('category', {'categoryId': 0}) }}" title="Produkte" data-toggle="dropdown" class="dropdown-toggle ">Produkte</a>
     <ul class="dropdown-menu">
       {% for category in categories %}
       <li>
-        <a class="{% if category.active %}{{active}}{% endif %}" href="{{ path( 'category', {'categoryId': category.id|e} ) }}">{{ category.attributename }}</a>
+        <a href="{{ path('category', {'categoryId': category.id}) }}" class="{% if path('category', {'categoryId': category.id}) is sameas(routeParam) %}active{% endif %}">{{ category.name }}</a>
       </li>
       {% else %}
       <li>
-        <p>No Categories found</p>
+        <span>No Categories found</span>
       </li>
       {% endfor %}
     </ul>
   </li>
 
-  {#
-  <li class="hl-lvl-0">
-    <a href="{{ path('schmucklisHome', {'url': 'faq'}) }}" title="FAQs" class="{% if path('schmucklisHome', {'url': 'faq'}) is sameas(routeParam) %}active{% endif %}">FAQs</a>
-  </li>
-#}
   <li>
-    <a href="{{ path('contact') }}" title="Kontakt">Kontakt</a>
+    <a href="{{ path('home', {'url': 'contact'}) }}" class="{% if path('home', {'url': 'contact'}) is sameas(routeParam) %}active{% endif %}" title="Kontakt">Kontakt</a>
   </li>
 
-  {% if is_granted('ROLE_USER') %}
+{#  {% if is_granted('ROLE_USER') %}#}
+{#  {% if is_granted('IS_AUTHENTICATED_FULLY') %}
   <li>
-    <a href="{{ path ('userAccount') }}" title="Mein Konto">Mein Konto</a>    
+    <a href="{{ path ('user_account') }}" title="Mein Konto">Mein Konto</a>    
     <ul>
       <li>
-        <a href="{{ path('userData') }}">Meine Daten</a>
+        <a href="{{ path('user_data') }}" title="Meine Daten">Meine Daten</a>
       </li>
       <li>
-        <a href="{{ path('userOrders') }}">Meine Bestellungen</a>
+        <a href="{{ path('user_orders') }}" title="Meine Bestellungen">Meine Bestellungen</a>
       </li>
     </ul>
-  </li>  
-  {% endif %} 
+  </li>
+  {% endif %}#}
+
+  {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+  <li>
+    <form class="navbar-form" action="{{ path('login_check') }}" method="post">
+      <div class="form-group">
+        <input name="_username" type="text" class="form-control" placeholder="Email">
+      </div>
+      <div class="form-group">
+        <input name="_password" type="password" class="form-control" placeholder="Password">
+      </div>
+      <button class="btn btn-success" type="submit">Login</button>
+    </form>
+  </li>
+  <li>
+    <a class="" href="{{ path('register') }}">Registrieren</a>
+  </li>
+  {% else %}
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user.username }}<b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <li class="dropdown-header">User Control Panel</li>
+      <li><a href="{{ path('user') }}">Nutzerdaten</a></li>
+      <li><a href="{{ path('user_password') }}">Passwort</a></li>
+		      {% if is_granted('ROLE_ADMIN') %}
+      <li class="divider"></li>
+      <li class="dropdown-header">Admin Control Panel</li>
+      <li><a href="#">Produkte</a></li>
+      <li><a href="#">Kategorien</a></li>
+		    {% endif %}
+      <li class="divider"></li>
+      <li><a href="{{ path('logout') }}">Logout</a></li>
+    </ul>
+  </li>
+
+  <li>
+    <a class="" href="{{ path('logout') }}">&nbsp;</a>
+  </li>
+  {% endif %}
+  
+  <li>
+    <a href="{{ path ('my_cart') }}" title="Cart" class="">Warenkorb</a>
+  </li>
 
 </ul>{# /.nav .navbar-nav #}
 {% endblock %}

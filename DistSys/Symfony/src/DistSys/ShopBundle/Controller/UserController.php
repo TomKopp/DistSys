@@ -3,34 +3,27 @@
 namespace DistSys\ShopBundle\Controller;
 
 use DistSys\ShopBundle\Form\Type\ProfileType;
-
 use DistSys\ShopBundle\Form\Type\PasswordType;
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use schmucklis\ShopBundle\Entity\Wishlist;
-use schmucklis\ShopBundle\Entity\WishlistItem;
-
-
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserController extends Controller {
 	
-	public function indexAction(){
-		
-		$user = $this->get('security.context')->getToken()->getUser();
-		$em = $this->getDoctrine()->getManager();
-		$profileForm = $this->createForm( new ProfileType(), $user );
-		
-	
-		return $this->render('DistSysShopBundle:User:index.html.twig', 
-				       array('user' => $user,
-				       		   'profileform' => $profileForm->createView()
-				       		  )
-				   );
-	}
-	
-	public function updateAction(Request $request){
+	public function indexAction() {
+
+    $user = $this->get('security.context')->getToken()->getUser();
+//    $em = $this->getDoctrine()->getManager();
+    $profileForm = $this->createForm(new ProfileType(), $user);
+
+
+    return $this->render('DistSysShopBundle:User:index.html.twig', array('user' => $user,
+        'profileform' => $profileForm->createView()
+        )
+    );
+  }
+
+  public function updateAction(Request $request) {
 	
 		$user = $this->get('security.context')->getToken()->getUser();
 		$em = $this->getDoctrine()->getManager();
@@ -60,7 +53,7 @@ class UserController extends Controller {
 	}
 	
 
-	public function passwordAction(Request $request){
+	public function passwordAction(Request $request) {
 	
 		$user = $this->get('security.context')->getToken()->getUser();
 		$passwordForm = $this->createForm( new PasswordType() );
@@ -73,7 +66,7 @@ class UserController extends Controller {
 				   );
 	}
 	
-	public function passwordUpdateAction(Request $request){
+	public function passwordUpdateAction(Request $request) {
 	
 		// User Session 
     $user = $this->get('security.context')->getToken()->getUser();
@@ -112,38 +105,73 @@ class UserController extends Controller {
 	}
 	
 	
-  #basic function to show user data
-  public function showAction($userId) {
-    $repository = $this->getDoctrine()->getRepository('schmucklisShopBundle:User');
-    $user = $repository->find($userId);
+//  public function showAction($userId) {
+//    // basic function to show user data
+//    $repository = $this->getDoctrine()->getRepository('DistSysShopBundle:User');
+//    $user = $repository->find($userId);
+//
+//    if (!$user) {
+//      throw $this->createNotFoundException('No user with Id "' . $userId . '" found');
+//    } else {
+//      return $this->render(
+//          'DistSysShopBundle:User:userShow.html.twig', array('user' => $user)
+//      );
+//    }
+//  }
 
-    if (!$user) {
-      throw $this->createNotFoundException('No product found for username ' . $userId);
-    } else {
-      return $this->render(
-          'schmucklisShopBundle:User:userShow.html.twig', array('user' => $user)
-      );
-    }
-  }
-
-  #greeting screen for User
   public function myAccountAction() {
+    // greeting screen for User
     $username = $this->get('security.context')->getToken()->getUser();
-    $user = $this->getDoctrine()->getRepository('schmucklisShopBundle:User')->findOneByEmail($username);
+    $user = $this->getDoctrine()->getRepository('DistSysShopBundle:User')->findOneByEmail($username);
 
     return $this->render(
-        'schmucklisShopBundle:User:myAccount.html.twig', array(
+        'DistSysShopBundle:User:myAccount.html.twig', array(
         'userdata' => $user
         )
     );
   }
 
 
-  #show Orders
-  public function myOrdersAction() {
+  public function myDataAction() {
+    // form to change Userdata
+    $em = $this->getDoctrine()->getManager();
+    $request = $this->getRequest();
+
     $username = $this->get('security.context')->getToken()->getUser();
-    $user = $this->getDoctrine()->getRepository('schmucklisShopBundle:User')->findOneByEmail($username);
-    $orders = $this->getDoctrine()->getRepository('schmucklisShopBundle:Booking')->findByUser($user->getUserId());
+    $user = $em->getRepository('DistSysShopBundle:User')->findOneByEmail($username);
+    $lastUrl = $request->headers->get('referer');
+
+    # get inserted data from Form          
+    # check weather there are changes
+    # alter the user entry in the database
+    if ($request->get('_gender') && $request->get('_gender') !== $user->getGender())
+      $user->setGender($request->get('_gender'));
+    if ($request->get('_firstname') && $request->get('_firstname') !== $user->getFirstname())
+      $user->setFirstname($request->get('_firstname'));
+    if ($request->get('_lastname') && $request->get('_lastname') !== $user->getLastname())
+      $user->setLastname($request->get('_lastname'));
+    if ($request->get('_street') && $request->get('_street') !== $user->getStreet())
+      $user->setStreet($request->get('_street'));
+    if ($request->get('_postal') && $request->get('_postal') !== $user->getPostal())
+      $user->setPostal($request->get('_postal'));
+    if ($request->get('_city') && $request->get('_city') !== $user->getCity())
+      $user->setCity($request->get('_city'));
+    $em->flush();
+
+    return $this->render(
+        'DistSysShopBundle:User:myData.html.twig', array(
+        'user' => $user,
+        'back' => $lastUrl,
+        )
+    );
+  }
+
+
+  public function myOrdersAction() {
+  // show Orders
+    $username = $this->get('security.context')->getToken()->getUser();
+    $user = $this->getDoctrine()->getRepository('DistSysShopBundle:User')->findOneByEmail($username);
+    $orders = $this->getDoctrine()->getRepository('DistSysShopBundle:Booking')->findByUser($user->getUserId());
     $orderArray = array();
     #write orders in an array, necessary because of the DateTimeObject
     for ($i = 0; $i < count($orders); $i++) {
@@ -173,10 +201,10 @@ class UserController extends Controller {
           $orderArray[$i]['status'] = 'undefiniert';
       }
       #get OrderItems
-      $orderArray[$i]['items'] = $this->getDoctrine()->getRepository('schmucklisShopBundle:BookingItem')->findById($orders[$i]->getId());
+      $orderArray[$i]['items'] = $this->getDoctrine()->getRepository('DistSysShopBundle:BookingItem')->findById($orders[$i]->getId());
       $k = 0;
       foreach ($orderArray[$i]['items'] as $item) {
-        $bookedProduct = $this->getDoctrine()->getRepository('schmucklisShopBundle:Product')->find($item->getProduct());
+        $bookedProduct = $this->getDoctrine()->getRepository('DistSysShopBundle:Product')->find($item->getProduct());
         $orderArray[$i]['booked'][$k] = $bookedProduct;
         $k++;
         $priceComplete+=$item->getQuantity() * $bookedProduct->getPrice();
@@ -187,7 +215,7 @@ class UserController extends Controller {
       $orderArray[$i]['priceComplete'] = $priceComplete;
     }
     return $this->render(
-        'schmucklisShopBundle:User:myOrders.html.twig', array(
+        'DistSysShopBundle:User:myOrders.html.twig', array(
         'orderArray' => $orderArray,
         )
     );
@@ -198,7 +226,7 @@ class UserController extends Controller {
     $em = $this->getDoctrine()->getManager();
     $request = $this->getRequest();
     $username = $this->get('security.context')->getToken()->getUser();
-    $user = $this->getDoctrine()->getRepository('schmucklisShopBundle:User')->findOneByEmail($username);
+    $user = $this->getDoctrine()->getRepository('DistSysShopBundle:User')->findOneByEmail($username);
     $error = false;
     #check password
     if ($request->get('password') != '') {
@@ -207,14 +235,14 @@ class UserController extends Controller {
         $em->flush();
         $user = 0;
         #redirect to homepage
-        return $this->redirect($this->generateUrl('schmucklisLogout'));
+        return $this->redirect($this->generateUrl('DistSysLogout'));
       } else {
         $error = true;
       }
     }
     #password does not match: redirect
     return $this->render(
-        'schmucklisShopBundle:User:deleteAccount.html.twig', array(
+        'DistSysShopBundle:User:deleteAccount.html.twig', array(
         'user' => $user,
         'error' => $error,
         )

@@ -10,7 +10,7 @@
 		  filter='yui_css'
       output='css/min.css'
     %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
+    <link rel="stylesheet" href="{{ asset_url }}">
 	  {% endstylesheets %}
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
     {% endblock %}
@@ -26,24 +26,23 @@
         {% block main %}{% endblock %}
     </section><!--/.main-->
 
-    <footer>
-{#      {% embed 'DistSysShopBundle:Scaffolding:footer.html.twig' %}{% endembed %}#}
+    <footer class="{% block footerClasses%}navbar navbar-default navbar-fixed-bottom container {% endblock %}">
+      {% embed 'DistSysShopBundle:Scaffolding:footer.html.twig' %}{% endembed %}
     </footer>
+
     {% block javascripts %}
-    
-    
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-    
+
 	  {% javascripts 
 	      '@DistSysShopBundle/Resources/public/js/main.js'
         filter='yui_js' 
         output='js/min.js'
     %}
-      <script src="{{ asset_url }}"></script>
+    <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
     {% endblock %}
-    
-    
+
+
   </body>
 </html>
