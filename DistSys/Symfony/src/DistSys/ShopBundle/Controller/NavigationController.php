@@ -7,8 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class NavigationController extends Controller {
 
   public function indexAction() {
-    $category = $this->getDoctrine()->getRepository('DistSysShopBundle:AttributeType')->getByName('category');
-    if (is_a($category, 'AttributeType')) {
+    $category = $this->getDoctrine()->getRepository('DistSysShopBundle:AttributeType')->findOneByName('category');
+    $categories = $this->getDoctrine()->getRepository('DistSysShopBundle:Attribute')->findByAttributeType($category->getId());
+    /*if (is_a($category, 'AttributeType')) {
       $categories = $category->getAttributes();
 //      $categories = $this->getDoctrine()->getRepository('DistSysShopBundle:Attribute')->findByAttributeType($category->getId());
       var_dump('category = AttributeType');
@@ -16,8 +17,8 @@ class NavigationController extends Controller {
       $categories = array();
       var_dump('category != AttributeType');
     }
-
-//    $categories = $this->getDoctrine()->getRepository('DistSysShopBundle:Attribute')->findByAttributeType(2);
+*/
+    //$categories = $this->getDoctrine()->getRepository('DistSysShopBundle:Attribute')->findByAttributeType(1);
 
     return $this->render('DistSysShopBundle:Default:navigation.html.twig', array('categories' => $categories));
   }
