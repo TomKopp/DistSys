@@ -14,85 +14,9 @@
     </nav>
 
 
-    <a href="{{ path ('my_cart') }}" title="Cart" class="btn btn-default navbar-btn navbar-right">Warenkorb</a>
-
-    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
-    <a class="btn btn-info navbar-btn navbar-right" href="{{ path('register') }}">Registrieren</a>
-    <form class="navbar-form navbar-right" action="{{ path('login_check') }}" method="post">
-      <div class="form-group">
-        <input name="_username" type="text" class="form-control" placeholder="Email">
-      </div>
-      <div class="form-group">
-        <input name="_password" type="password" class="form-control" placeholder="Password">
-      </div>
-      <button class="btn btn-success" type="submit">Login</button>
-    </form>
-    {% else %}
-    <ul class="nav navbar-nav navbar-right">
-			<li class="dropdown">
-	      <a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ app.user.username }}<b class="caret"></b></a>
-	      <ul class="dropdown-menu">
-		      <li class="dropdown-header">Shop Control Panel</li>
-		      <li><a href="{{ path('booking') }}">Bestellungen</a></li>
-		      <li class="divider"></li>
-		      <li class="dropdown-header">User Control Panel</li>
-		      <li><a href="{{ path('user') }}">Nutzerdaten</a></li>
-		      <li><a href="{{ path('user_password') }}">Passwort</a></li>
-		      {% if is_granted('ROLE_ADMIN') %}
-		      <li class="divider"></li>
-		      <li class="dropdown-header">Admin Control Panel</li>
-		      <li><a href="#">Produkte</a></li>
-		      <li><a href="#">Kategorien</a></li>
-		      {% endif %}
-		      <li class="divider"></li>
-		      <li><a href="{{ path('logout') }}">Logout</a></li>
-	      </ul>
-	     </li>
-	   </ul>
-    
-    
-    <a class=" navbar-right" href="{{ path('logout') }}"></a>
-    {% endif %}
 
 
-    {#
-    <div class="top-links">
-      <div class="login">
-    {% if is_granted('ROLE_USER') %}
-        <a href="{{ path ('logout') }}" title="Logout">Logout</a>       
-    {% else %}       
-        <a href="{{ path ('login') }}" title="Login">Login</a> 
-        <a href="{{ path ('register') }}" title="Registrieren">Registrieren</a>
-    {% endif %} 
-      </div>
-      <div class="cart">
-        <a href="{{ path ('cartShow') }}" title="Cart" class="cart-link">
-      {% set cartAmount = app.session.get('cartAmount') %}      
-      {% set priceComplete = app.session.get('priceComplete') %}
-      {% if cartAmount > 0 %}
-          <span>
-        {{ cartAmount }} Artikel<br>
-        {{ priceComplete |number_format(2,',', '.' )}} €
-          </span>
-          <span class="ico cart-full">&nbsp</span>
-      {% else %}
-          <span>
-            0 Artikel<br>
-            0,00 €
-          </span>
-          <span class="ico">&nbsp</span>
-      {% endif %}
-        </a>
-      </div>
-      <div class="quick-search">
-        <form action="{{ path('searchResult') }}" method="post">
-          <!--<input type="text" id="search" name="search" value="Suchbegriff eingeben..." onclick="if (this.value && this.value === this.defaultValue)
-                this.value = '';">-->
-          <input type="text" id="search" name="search" placeholder="Suchbegriff eingeben..." value="">
-          <button type="submit">Suche</button>
-        </form>
-      </div>
-    </div>#}{#  /.top-links #}
+    {#  /.top-links #}
 
   </div>{#  /.navbar-collapse collapse #}
 
