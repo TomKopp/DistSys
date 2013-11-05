@@ -1,0 +1,98 @@
+{% extends 'DistSysShopBundle:Scaffolding:scaffolding.html.twig' %}
+
+{% block bodyClasses %}{% endblock %}
+
+{% block main %}
+<h1>Mein Warenkorb</h1>
+
+{# flash messages output #}
+{% for flashMessage in app.session.flashbag.get('cartAdd') %}
+<div class="flash-message">
+  {{ flashMessage }}
+</div>
+{% endfor %}
+{% for flashMessage in app.session.flashbag.get('cartRemove') %}
+<div class="flash-message">
+  {{ flashMessage }}
+</div>
+{% endfor %} 
+{% for flashMessage in app.session.flashbag.get('error') %}
+<div class="flash-message">
+    {{ flashMessage }}
+</div>
+{% endfor %}
+
+
+{# product list #}
+<table>
+  <thead>
+    <tr>
+      <th colspan="1" scope="col" class="invisible">Bild</th>
+      <th colspan="1" scope="col" class="invisible">Produktname</th>
+      <th colspan="1" scope="col">Anzahl</th>
+      <th colspan="1" scope="col">Preis</th>
+      <th colspan="1" scope="col">Entfernen</th>
+    </tr>
+  </thead>
+
+  <tbody>
+  {% for product in cartContent %}
+    <tr>
+
+      <td colspan="1" class="prod-img">
+        <a href="{{ path ('showProduct', {'productId': product.id}) }}">
+          {% if product.image.imageUrl is defined %}
+          <img src="{{ asset('images/products/' ~ product.image.imageUrl) }}" alt="{{ product.image.imageAlt }}" title="{{ product.image.imageTitle }}">
+          {% else %}
+          <img src="http://dummyimage.com/300x300/cccccc/000000" alt="DistSys Image" title="DistSys Image">
+          {% endif %}
+        </a>
+      </td>{# /.prod-img #}
+
+      <td colspan="1" class="prod-name">
+        <p><a href="{{ path ('showProduct', {'productId': product.id}) }}">{{ product.name }}</a></p>
+        <p>{{ product.teaser }}</p>
+      </td>{# /.prod-name #}
+
+      <td colspan="1" class="prod-qty">
+        <form method="post" action="{{ path('cartChange', {'productId': product.id }) }}">
+          <select name="prod_anz" id="prod_anz" onchange="this.form.submit();">
+          {% if product.stock > 10 %}
+            {% set max = 10 %}
+          {% else %}
+            {% set max = product.stock %}
+          {% endif %}
+          {% for i in 1..max %}
+            <option{% if product.amount == loop.index %} selected="selected"{% endif %} value="{{ loop.index }}">{{ loop.index }}</option>
+          {% endfor %}
+          </select>
+        </form>
+      </td>{# /.prod-qty #}
+
+      <td colspan="1" class="prod-price">
+     {{ (product.price * product.amount)|number_format(2,',', '.' ) }} €
+      </td>{# /.prod-price #}
+
+      <td colspan="1" class="prod-del">
+        <form method="post" action="{{ path('cartRemove', {'productId': product.id }) }}">
+          <div class="submit_containern">
+            <input type="submit" name="entfernen" value="">
+          </div>
+        </form>
+      </td>{# /.prod-del #}
+
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+<p class="p_sum">Summe: {{ priceComplete|number_format(2,',', '.' ) }} €</p>
+
+<form method="post" action="{{ path('checkout') }}">
+  <div class="submit_container">
+    <input type="submit" value="zur Kasse">
+  </div>
+</form>
+
+<a class="back" href="{{ lastUrl }}">zurück</a>
+{% endblock %}

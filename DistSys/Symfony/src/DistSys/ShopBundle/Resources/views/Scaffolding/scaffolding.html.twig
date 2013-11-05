@@ -24,9 +24,9 @@
 
     <section id="main" class="{% block mainClasses%}container {% endblock %}">
         {% block main %}{% endblock %}
-    </section><!--/.main-->
+    </section>{# /.main #}
 
-    <footer class="{% block footerClasses%}navbar navbar-default navbar-fixed-bottom container {% endblock %}">
+    <footer class="{% block footerClasses %}navbar navbar-default navbar-fixed-bottom {% endblock %}">
       {% embed 'DistSysShopBundle:Scaffolding:footer.html.twig' %}{% endembed %}
     </footer>
 
