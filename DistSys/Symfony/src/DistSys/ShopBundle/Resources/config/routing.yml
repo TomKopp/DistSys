@@ -42,23 +42,25 @@ user_password_update:
 booking:
     pattern:  /booking
     defaults: { _controller: DistSysShopBundle:Booking:index }
-
     
-#user_account:
-#  
-#user_data:
-#  
-#user_orders:
-# end
-    
+#my_cart kann verändert werden, wenn nötig :)
 my_cart:
   pattern: /myCart
   defaults: { _controller: DistSysShopBundle:Cart:index }
   
-# shop
+# shop zeug
+
 category:
   pattern: /category/{categoryId}
-  defaults: { _controller: DistSysShopBundle:Default:index, url: 'frontpage' }
+  defaults: { _controller: DistSysShopBundle:Shop:category }
+  requirements:
+    productId: \d+
+
+product:
+  pattern: /product/{productId}
+  defaults: { _controller: DistSysShopBundle:Shop:product }
+  requirements:
+    productId: \d+
 
 home:
     pattern:  /{url}

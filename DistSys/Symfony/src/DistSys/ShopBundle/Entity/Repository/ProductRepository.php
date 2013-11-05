@@ -19,7 +19,7 @@ class ProductRepository extends EntityRepository {
    * @param array $param
    * @return Product
    */
-  public function getProductsByAttributes($attrId, $param = NULL) {
+  public function getProductsByAttribute($attrId, $param = NULL) {
     if ($param) {
       array_key_exists('limit', $param) ? $limit = (int) $param['limit'] : $limit = NULL;
       array_key_exists('offset', $param) ? $offset = (int) $param['offset'] : $offset = NULL;

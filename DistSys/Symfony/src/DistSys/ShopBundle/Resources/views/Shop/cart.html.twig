@@ -41,8 +41,8 @@
 
       <td colspan="1" class="prod-img">
         <a href="{{ path ('showProduct', {'productId': product.id}) }}">
-          {% if product.image.imageUrl is defined %}
-          <img src="{{ asset('images/products/' ~ product.image.imageUrl) }}" alt="{{ product.image.imageAlt }}" title="{{ product.image.imageTitle }}">
+          {% if product.galleryItems|first.imageUrl is defined %}
+          <img src="{{ asset('images/products/' ~ product.galleryItems|first.imageUrl) }}" alt="{{ product.galleryItems|first.imageAlt }}" title="{{ product.galleryItems|first.imageTitle }}">
           {% else %}
           <img src="http://dummyimage.com/300x300/cccccc/000000" alt="DistSys Image" title="DistSys Image">
           {% endif %}

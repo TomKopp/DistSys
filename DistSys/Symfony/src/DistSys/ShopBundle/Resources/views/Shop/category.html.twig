@@ -1,47 +1,52 @@
 {% extends 'DistSysShopBundle:Scaffolding:scaffolding.html.twig' %}
 
-{% block mainClasses %}category{% endblock %}
 {% block main %}
 
-<ul class="products horizontal-list">
+<ul class="products list-inline row">
   {% for product in products %}
-  <li class="hl-lvl-0">
-    <a href="{{ path('DistSysShowProduct', {'productId': product.id}) }}">
-      {% if product.galleryItems|first.imageUrl is defined %}
-      <img src="{{ asset('images/products/' ~ product.galleryItems|first.imageUrl) }}" alt="{{ product.galleryItems|first.imageAlt }}" title="{{ product.galleryItems|first.imageTitle }}">
-      {% else %}
-      <img src="http://dummyimage.com/300x300/cccccc/000000" alt="DistSys Image" title="DistSys Image">
-      {% endif %}
-    </a>
-    <a class="font-highlight-color prod-name" href="{{ path( 'DistSysShowProduct', {'productId': product.id} ) }}">{{ product.productName }}</a>
-    <p class="prod-teaser">{{ product.teaser }}</p>
+  <li class="hl-lvl-0 col-sm-6 col-md-4">
+    <article class="thumbnail">
+      <a href="{{ path('product', {'productId': product.id}) }}">
+        {% if product.galleryItems|first.imageUrl is defined %}
+        <img src="{{ asset('images/products/' ~ product.galleryItems|first.imageUrl) }}" alt="{{ product.galleryItems|first.imageAlt }}" title="{{ product.galleryItems|first.imageTitle }}">
+        {% else %}
+        <img src="http://dummyimage.com/300x300/cccccc/000000" alt="DistSys Image" title="DistSys Image">
+        {% endif %}
+      </a>
+      <div class="caption">
+        <h2>
+          <a class="prod-name" href="{{ path('product', {'productId': product.id}) }}">{{ product.productName }}</a>
+        </h2>
+        <p class="prod-teaser">{{ product.teaser }}</p>
+      </div>
+    </article>
   </li>
 
 {% if (loop.index % 4) is sameas(0) and not loop.last %}
 </ul>
-<ul class="products horizontal-list">
+<ul class="products list-inline row">
 {% endif %}
 
   {% else %}
   <li class="hl-lvl-0">
-    <p>No Products in this category</p>
+    <span>In dieser Kategorie gibt es zur Zeit keine Produkte.</span>
   </li>
   {% endfor %}
-</ul>
+</ul>{# /.products row #}
 
 <ul class="pagination">
   {% for key, site in pagination %}
   {% if not(loop.first and site.active) %}
   <li>
-    <a class="prev" href="{{ path('DistSysShowHeading', {'categoryId': categoryId, 'pagination': key-1}) }}">&laquo;</a>
+    <a class="prev" href="{{ path('category', {'categoryId': categoryId, 'pagination': key-1}) }}">&laquo;</a>
   </li>
   {% endif %}
   <li class="{% if site.active %}active{% endif %}">
-    <a href="{{ path('DistSysShowHeading', {'categoryId': categoryId, 'pagination': key}) }}">{{ site|e }}</a>
+    <a href="{{ path('category', {'categoryId': categoryId, 'pagination': key}) }}">{{ site|e }}</a>
   </li>
   {% if not(loop.last and site.active) %}
   <li>
-    <a class="next" href="{{ path('DistSysShowHeading', {'categoryId': categoryId, 'pagination': key+1}) }}">&raquo;</a>
+    <a class="next" href="{{ path('category', {'categoryId': categoryId, 'pagination': key+1}) }}">&raquo;</a>
   </li>
   {% endif %}
   {% endfor %}

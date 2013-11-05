@@ -2,7 +2,7 @@
 
 {% block main %}
 <article class="product">
-
+{% if product is not sameas(null) %}
   {% if product.galleryItems|first.imageUrl is defined %}
   <img src="{{ asset('images/products/' ~ product.galleryItems|first.imageUrl) }}" alt="{{ product.galleryItems|first.imageAlt }}" title="{{ product.galleryItems|first.imageTitle }}">
   {% else %}
@@ -27,27 +27,32 @@
         {% endif %}
       {% endfor %}
       </ul>
-    </div><!--/.prod-attr-->
+    </div>{# /.prod-attr #}
 
     <div class="prod-buy">
       <p class="prod-price">{{ product.price|number_format(2,',', '.' )}} €</p>
       <p>inkl. 19% MwSt<br>zzgl. Versand</p>
       {% if product.stock > 0 %}
-      <form class="into-cart-form" method="post" action="{{ path( 'DistSysCartAdd', {'productId': product.id} ) }}">
+      <form class="into-cart-form" method="post" action="{{ path('DistSysCartAdd', {'productId': product.id}) }}">
         <div class="submit-container">
           <input type="submit" name="in den Warenkorb" value="" class="into-cart">
         </div>
       </form>
       {% else %}
-      <p>Das Produkt ist derzeit leider nicht verfügbar.</p>
+      <p class="text-danger">Das Produkt ist derzeit leider nicht verfügbar.</p>
       {% endif %}
-    </div><!--/.prod-buy-->
-  </div><!--/.wrapper-->
+    </div>{# /.prod-buy #}
+  </div>{# /.wrapper #}
+{% else %}
+  <p class="text-danger">Dieses Produkt existiert nicht (mehr).</p>
+{% endif %}
 
 </article>
 
+{% if product is not sameas(null) %}
 <asside class="related-products">
   <h2>Das könnte Sie auch interessieren</h2>
   {% render(controller('DistSysShopBundle:Shop:renderRelatedProducts', {'productId': product.id})) %}
 </asside>
+{% endif %}
 {% endblock %}
