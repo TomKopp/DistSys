@@ -6,8 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class CartController extends Controller {
 
-  //function to show the current ShoppingCart
   public function indexAction() {
+    // function to show the current ShoppingCart
     $repository = $this->getDoctrine()->getRepository('DistSysShopBundle:Product');
     $session = $this->getRequest()->getSession();
     $lastUrl = $this->getRequest()->headers->get('referer');
@@ -24,21 +24,22 @@ class CartController extends Controller {
       $resultComplete[$i]['name'] = $result->getProductName();
       $resultComplete[$i]['price'] = $result->getPrice();
       $resultComplete[$i]['stock'] = $result->getStock();
-      $resultComplete[$i]['teaser']=$result->getTeaser();
-      $resultComplete[$i]['image']=$result->getPrepict();
+      $resultComplete[$i]['teaser'] = $result->getTeaser();
+      $resultComplete[$i]['image'] = $result->getPrepict();
     }
     unset($result);
 
     return $this->render(
-        'DistSysShopBundle:Shop:cartShow.html.twig', array(
+        'DistSysShopBundle:Shop:cart.html.twig', array(
         'cartContent' => $resultComplete,
         'priceComplete' => $totalPrice,
         'lastUrl' => $lastUrl,
-    ));
+        )
+    );
   }
-  //function to add a product to the currend ShoppingCart
-  public function addAction($productId) {
 
+  public function addAction($productId) {
+    // function to add a product to the currend ShoppingCart
     $session = $this->getRequest()->getSession();
     $session->getFlashBag()->add('cartAdd', 'Produkt Nr.' . $productId . ' wurde Ihrem Warenkorb hinzugefügt.');
 
@@ -82,7 +83,7 @@ class CartController extends Controller {
     #redirect to the shopping cart  
     return $this->redirect($this->generateUrl('schmucklisCartShow'));
   }
-  
+
   //function to remove an item from the Cart
   public function removeAction($productId) {
     #return $this->redirect($request->headers->get('referer'));
@@ -106,7 +107,7 @@ class CartController extends Controller {
     }
     #delete last element
     unset($cartContent[$anz]);
-    
+
     #set cartContent into the session
     $session->set('cartContent', $cartContent);
     $session->getFlashBag()->add('cartRemove', 'Produkt Nr.' . $productId . ' wurde aus Ihrem Warenkorb entfernt.');
@@ -117,7 +118,7 @@ class CartController extends Controller {
 
     $cartAmount--;
     $priceComplete -= $this->getDoctrine()->getRepository('DistSysShopBundle:Product')->find($productId)->getPrice() * $removeAnz;
-    
+
     $session->set('cartAmount', $cartAmount);
     $session->set('priceComplete', $priceComplete);
 
@@ -126,6 +127,7 @@ class CartController extends Controller {
   }
 
   #function if the amount of an item in the Cart is changed 
+
   public function changeAction($productId) {
     $request = $this->getRequest();
     $session = $request->getSession();
@@ -141,7 +143,7 @@ class CartController extends Controller {
         break;
       }
     }
-    
+
     $session->set('cartContent', $cartContent);
     $session->set('priceComplete', $priceComplete);
     #redirect to the shopping cart
