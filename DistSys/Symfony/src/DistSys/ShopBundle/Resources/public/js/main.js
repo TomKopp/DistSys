@@ -124,8 +124,7 @@ $(document).ready(function(){
 						    	userShow();
 						    	userEdit();
 						    	userDelete();
-								 $( "#render" ).hide();
-								 $( "#render" ).html("");
+								 $( "#render" ).delay(2000).hide("slow");
 						    });
 					      
 					    });
@@ -210,8 +209,7 @@ $(document).ready(function(){
 						    	catShow();
 						    	catEdit();
 						    	catDelete();
-								 $( "#render" ).hide();
-								 $( "#render" ).html("");
+								 $( "#render" ).delay(2000).hide("slow");
 						    });
 					      
 					    });
@@ -258,8 +256,7 @@ $(document).ready(function(){
 							    	catEdit();
 							    	catDelete();
 
-									 $( "#render" ).hide();
-									 $( "#render" ).html("");
+									 $( "#render" ).delay(2000).hide("slow");
 							    });
 						      
 						    });
