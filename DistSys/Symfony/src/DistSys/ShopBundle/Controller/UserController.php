@@ -42,7 +42,7 @@ class UserController extends Controller {
                         
          // Weiterleitung zur Übersicht 
          $res = true;
-         $status = "Benutzerdaten erfolis_grantedgreich geändert.";
+         $status = "Benutzerdaten erfolgreich geändert.";
       }else {
       	// Zurück mit Fehlerausgabe
       	$res = false;

@@ -28,9 +28,10 @@ class ProductRepository extends EntityRepository {
 
     $qb = $this->createQueryBuilder('p');
     $qb->select('p')
-      ->where('?1 MEMBER OF p.attributes')
-      ->andWhere($qb->expr()->like('p.status', '?2'))
-      ->setParameters(array(1 => $attrId, 2 => TRUE));
+      ->join('p.attributes', 'a')
+      ->where('a.attributeType = :attrId')
+      ->setParameter('attrId', $attrId);
+
 
     if (isset($offset)) {
       $qb->setFirstResult($offset);

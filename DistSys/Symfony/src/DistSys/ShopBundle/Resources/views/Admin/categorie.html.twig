@@ -1,0 +1,43 @@
+{% extends 'DistSysShopBundle::Scaffolding/scaffolding.html.twig' %}
+
+{% block main %}
+
+
+<h2 class="heading style1">Kategorien Verwalten</h2>
+                        <table class="table table-condensed" width="500px" cellpadding="0" cellspacing="0">
+                          <thead>
+                            <tr>
+                              <th>Kategorie</th>
+                              {#  <th width="100">Bestellungen</th> #}
+                              <th >Anzeigen</th>
+                              <th>Bearbeiten</th>
+                              <th >Löschen</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for categorie in categories %}
+                            <tr>
+                              <td><p>{{ categorie.name }}</p></td>
+                              {#<td><a href="">Bestellungen</a></td>#}
+                              <td><a class="catShow btn btn-success"  href="{{ path('admin_categorie_show', {'id': categorie.id}) }}">Show</a></td>
+                              <td><a class="catEdit btn btn-primary"  href="{{ path('admin_categorie_edit', {'id': categorie.id}) }}">Edit</a></td>
+                              <td><a class="catDelete btn btn-danger"  href="{{ path('admin_categorie_remove', {'id': categorie.id}) }}">Remove</a></td>
+
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                          <tfoot>
+                            <tr>
+                              <td colspan="5"></td>
+                            </tr>
+                          </tfoot>
+                        </table>
+                        
+      <a class="catNew btn btn-default"  href="{{ path('admin_categorie_new') }}">Neue Kategorie</a>
+    <div id="render">
+    
+     </div>
+    
+
+
+{% endblock %}

@@ -26,6 +26,10 @@ admin_user:
     pattern: /admin/user    
     defaults: { _controller: DistSysShopBundle:Admin:user }
     
+admin_user_part:
+    pattern: /admin/user/part    
+    defaults: { _controller: DistSysShopBundle:Admin:userPart }
+    
 admin_user_edit:
     pattern: /admin/user/edit/{id}
     defaults: { _controller: DistSysShopBundle:Admin:userEdit }
@@ -41,6 +45,39 @@ admin_user_show:
 admin_user_remove:
     pattern: /admin/user/remove/{id}  
     defaults: { _controller: DistSysShopBundle:Admin:userRemove }
+    
+    
+admin_categorie:
+    pattern: /admin/categorie    
+    defaults: { _controller: DistSysShopBundle:Admin:categorie }
+    
+admin_categorie_part:
+    pattern: /admin/categorie/part  
+    defaults: { _controller: DistSysShopBundle:Admin:categoriePart }
+    
+admin_categorie_new:
+    pattern: /admin/categorie/new    
+    defaults: { _controller: DistSysShopBundle:Admin:categorieNew }
+    
+admin_categorie_save:
+    pattern: /admin/categorie/save    
+    defaults: { _controller: DistSysShopBundle:Admin:categorieSave }
+    
+admin_categorie_edit:
+    pattern: /admin/categorie/edit/{id}
+    defaults: { _controller: DistSysShopBundle:Admin:categorieEdit }
+    
+admin_categorie_update:
+    pattern: /admin/categorie/update/{id}
+    defaults: { _controller: DistSysShopBundle:Admin:categorieUpdate }
+    
+admin_categorie_show:
+    pattern: /admin/categorie/show/{id}
+    defaults: { _controller: DistSysShopBundle:Admin:categorieShow }
+    
+admin_categorie_remove:
+    pattern: /admin/categorie/remove/{id}  
+    defaults: { _controller: DistSysShopBundle:Admin:categorieRemove }
     
     
 # profil zeugs   
