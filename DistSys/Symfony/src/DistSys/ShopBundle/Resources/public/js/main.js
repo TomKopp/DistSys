@@ -61,5 +61,70 @@ $(document).ready(function(){
 	 
 	    return false;
 	  });
+  
+  $('.userShow').each(function(){
+	 $(this).click(function(){
+		 href = $(this).attr('href');
+		 $.get(href, function( data ) {
+			 $( "#render" ).hide();
+			  $( "#render" ).html( data );
+			  $( "#render" ).show("slow");
+			  
+		  });
+		 return false;
+	 }) ;
+	  
+  });
+  
+  $('.userEdit').each(function(){
+		 $(this).click(function(){
+			 href = $(this).attr('href');
+			 $.get(href, function( data ) {
+				 $( "#render" ).hide();
+				  $( "#render" ).html( data );
+				  $( "#render" ).show("slow");
+				  $("#profile-form").submit( function( e ){
+					  
+					    e.preventDefault();
+					    postForm( $(this), function( response ){
+					      $('.res').html(response.status);
+					      if (response.res){
+					    	  $('.res').addClass("text-success");
+					    	  $('.res').removeClass("text-danger");
+					      }else {
+					    	  $('.res').removeClass("text-success");
+					    	  $('.res').addClass("text-danger");
+					    	 
+					      }
+					      
+					    });
+					 
+					    return false;
+					  });
+			  });
+			 
+			 
+			  
+			 
+			 
+			 return false;
+		 }) ;
+		  
+	  });
+  
+  $('.userDelete').each(function(){
+		 $(this).click(function(){
+			 href = $(this).attr('href');
+			 tr = $(this).parent().parent();
+			 $.get(href, function( data ) {
+				  $( "#render" ).html( data.res );
+				  if (data.status == true){
+					  $(tr).hide("slow");
+				  }
+			  });
+			 return false;
+		 }) ;
+		  
+	  });
 	 
 });

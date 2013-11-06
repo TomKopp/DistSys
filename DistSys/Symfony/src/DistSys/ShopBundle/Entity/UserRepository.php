@@ -19,6 +19,19 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
  */
 class UserRepository extends EntityRepository implements UserProviderInterface
 {
+	
+	public function findAllByAktiveUser(){
+		$q = $this
+		->createQueryBuilder('u')
+		->join('u.roles', 'r')
+		->where(' r.name != :role ')
+		->setParameter('role', 'ROLE_DELETED')
+		->getQuery()
+		;
+		return $q->getResult();
+	}
+	
+	
 	public function loadUserByUsername($username)
 	{
         $q = $this

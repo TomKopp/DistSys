@@ -20,6 +20,29 @@ logout:
     pattern:  /logout
     defaults: { _controller: DistSysShopBundle:Security:logout }
     
+# admin zeugs
+
+admin_user:
+    pattern: /admin/user    
+    defaults: { _controller: DistSysShopBundle:Admin:user }
+    
+admin_user_edit:
+    pattern: /admin/user/edit/{id}
+    defaults: { _controller: DistSysShopBundle:Admin:userEdit }
+    
+admin_user_update:
+    pattern: /admin/user/update/{id}
+    defaults: { _controller: DistSysShopBundle:Admin:userUpdate }
+    
+admin_user_show:
+    pattern: /admin/user/show/{id}
+    defaults: { _controller: DistSysShopBundle:Admin:userShow }
+    
+admin_user_remove:
+    pattern: /admin/user/remove/{id}  
+    defaults: { _controller: DistSysShopBundle:Admin:userRemove }
+    
+    
 # profil zeugs   
     
 user:

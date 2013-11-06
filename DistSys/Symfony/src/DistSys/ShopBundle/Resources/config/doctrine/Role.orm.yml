@@ -18,3 +18,4 @@ DistSys\ShopBundle\Entity\Role:
     users:
       targetEntity: User
       mappedBy: roles
+      cascade: ["all"]
