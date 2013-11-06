@@ -21,7 +21,8 @@ class ShopController extends Controller {
     // Pagination
     $allProductsInCategory = $doctrine->getRepository('DistSysShopBundle:Product')->getProductsByAttribute($categoryId);
     $request->get('pagination') ? $currentSite = $request->get('pagination') : $currentSite = 0;
-    for ($i = 0; ceil(count($allProductsInCategory) / $prodQantityPerSite); $i++) {
+    
+    for ($i = 0; $i < ceil(count($allProductsInCategory) / $prodQantityPerSite); $i++) {
       if ($currentSite === $i) {
         $pagination[$i]['active'] = TRUE;
       } else {

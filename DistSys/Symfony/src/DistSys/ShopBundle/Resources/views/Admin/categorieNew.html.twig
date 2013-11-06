@@ -1,0 +1,27 @@
+
+<h1>Neue Kategorie anlegen</h1>
+<form class="form-horizontal" id="cat-form" action="{{ path('admin_categorie_save') }}" method="post" {{ form_enctype(catForm) }}>
+      {% if error is defined %} 
+    {{ error }}
+  {% endif %}
+  <div class="form-group">
+  {{ form_label(catForm.name) }}
+  {{ form_errors(catForm.name) }}
+	  <div class="col-lg-5">
+	    {{ form_widget(catForm.name) }}
+	  </div>
+  </div>
+
+    <p>
+        <button class="btn btn-primary" type="submit">speichern</button>
+    </p>
+    <p class="res">
+    </p>
+    {{ form_end(catForm) }}
+    <p>&nbsp;
+    </p>
+    <p>&nbsp;
+    </p>
+    <p>&nbsp;
+    </p>
+</form>

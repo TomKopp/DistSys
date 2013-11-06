@@ -1,0 +1,27 @@
+
+<h1>Nutzerdaten</h1>
+<form class="form-horizontal" id="cat-form" action="{{ path('admin_cat_update', {'id': user.id}) }}" method="post" {{ form_enctype(catform) }}>
+      {% if error is defined %} 
+    {{ error }}
+  {% endif %}
+  <div class="form-group">
+  {{ form_label(catform.name) }}
+  {{ form_errors(catform.name) }}
+	  <div class="col-lg-5">
+	    {{ form_widget(catform.name) }}
+	  </div>
+  </div>
+
+    <p>
+        <button class="btn btn-primary" type="submit">speichern</button>
+    </p>
+    <p class="res">
+    </p>
+    {{ form_end(catform) }}
+    <p>&nbsp;
+    </p>
+    <p>&nbsp;
+    </p>
+    <p>&nbsp;
+    </p>
+</form>
