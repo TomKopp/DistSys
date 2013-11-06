@@ -124,6 +124,8 @@ $(document).ready(function(){
 						    	userShow();
 						    	userEdit();
 						    	userDelete();
+								 $( "#render" ).hide();
+								 $( "#render" ).html("");
 						    });
 					      
 					    });
@@ -208,6 +210,8 @@ $(document).ready(function(){
 						    	catShow();
 						    	catEdit();
 						    	catDelete();
+								 $( "#render" ).hide();
+								 $( "#render" ).html("");
 						    });
 					      
 					    });
@@ -224,7 +228,56 @@ $(document).ready(function(){
 	  });
   }
   function catEdit(){
-  
+	  $('.catEdit').each(function(){
+			 $(this).click(function(){
+				 href = $(this).attr('href');
+				 $.get(href, function( data ) {
+					 $( "#render" ).hide();
+					  $( "#render" ).html( data );
+					  $( "#render" ).show("slow");
+					  $("#cat-form").submit( function( e ){
+						  
+						    e.preventDefault();
+						    postForm( $(this), function( response ){
+						      $('.res').html(response.status);
+						      if (response.res){
+						    	  $('.res').addClass("text-success");
+						    	  $('.res').removeClass("text-danger");
+						      }else {
+						    	  $('.res').removeClass("text-success");
+						    	  $('.res').addClass("text-danger");
+						    	 
+						      }
+						      index = href.lastIndexOf("/");
+						      newHref = href.substring(0, index);
+						      index = newHref.lastIndexOf("/");
+						      newHref = newHref.substring(0, index+1);
+						      $.get(newHref+"part", function( data ) {
+							    	$( "#main table" ).html( data );
+							    	catShow();
+							    	catEdit();
+							    	catDelete();
+
+									 $( "#render" ).hide();
+									 $( "#render" ).html("");
+							    });
+						      
+						    });
+						    
+						    
+						 
+						    return false;
+						  });
+				  });
+				 
+				 
+				  
+				 
+				 
+				 return false;
+			 }) ;
+			  
+		  });
   }
   function catDelete(){
 	  $('.catDelete').each(function(){

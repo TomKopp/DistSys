@@ -1,6 +1,6 @@
 
 <h1>Nutzerdaten</h1>
-<form class="form-horizontal" id="cat-form" action="{{ path('admin_cat_update', {'id': user.id}) }}" method="post" {{ form_enctype(catform) }}>
+<form class="form-horizontal" id="cat-form" action="{{ path('admin_categorie_update', {'id': cat.id}) }}" method="post" {{ form_enctype(catform) }}>
       {% if error is defined %} 
     {{ error }}
   {% endif %}

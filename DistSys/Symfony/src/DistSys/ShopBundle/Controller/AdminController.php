@@ -144,6 +144,9 @@ class AdminController extends Controller {
 		// Speichern, wenn das Formular Valid ist
 		if ($form->isValid()) {
 			$cat = $form->getData();
+			$attrType = $this->getDoctrine()->getRepository('DistSysShopBundle:AttributeType')->findOneByName('category');
+			
+			$cat->setAttributeType($attrType);
 
 			// Adresse in die Datenbank speichern
 			$em->persist($cat);
@@ -173,6 +176,45 @@ class AdminController extends Controller {
 		$res = "Kategorie erfolgreich gelöscht!";
 	
 		return new JsonResponse(array('res' => $res, 'status' => $status));
+	}
+
+	public function categorieEditAction($id) {
+		$em = $this->getDoctrine()->getManager();
+		$cat = $em->getRepository('DistSysShopBundle:Attribute')->findOneById($id);
+		$catForm = $this->createForm(new CategorieType(), $cat);
+
+		return $this
+				->render('DistSysShopBundle:Admin:categorieEdit.html.twig',
+						array('cat' => $cat,
+								'catform' => $catForm->createView()));
+	}
+	
+	public function categorieUpdateAction($id) {
+	
+		$em = $this->getDoctrine()->getManager();
+		$cat = $em->getRepository('DistSysShopBundle:Attribute')->findOneById($id);
+		$form = $this->createForm(new CategorieType(), $cat);
+		$form->bind($this->getRequest());
+	
+		// Speichern, wenn das Formular Valid ist
+		if ($form->isValid()) {
+			$user = $form->getData();
+	
+			// Adresse in die Datenbank speichern
+			$em->persist($cat);
+			$em->flush();
+	
+			// Weiterleitung zur Übersicht
+			$res = true;
+			$status = "Kategorie erfolgreich geändert.";
+		} else {
+			// Zurück mit Fehlerausgabe
+			$res = false;
+			$status = "Bitte füllen Sie alle benötigten Felder aus.";
+		}
+	
+		return new JsonResponse(array('res' => $res, 'status' => $status));
+	
 	}
 
 }
