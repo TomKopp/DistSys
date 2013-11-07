@@ -13,8 +13,15 @@
         <h2>
           <a class="prod-name" href="{{ path('product', {'productId': product.id}) }}">{{ product.name }}</a>
         </h2>
-        <a href="{{ path('add_cart', {'productId' : product.id}) }}" type="button" class="cart_add btn btn-primary">in den Warenkorb</a>
-      
+        <div class="row">
+          <div class="col-md-6">
+            <strong>{{ product.price }} €</strong><br>
+            <span>inkl. 19% MwSt.</span>
+          </div>
+            <div class="col-md-6">
+          <a href="{{ path('add_cart', {'productId' : product.id}) }}" type="button" class=" cart_add btn btn-primary">in den Warenkorb</a>
+          </div>
+        </div>
       </div>
     </article>
   </li>
