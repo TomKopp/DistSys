@@ -248,6 +248,19 @@ class Product {
 
     return $this;
   }
+  
+  /**
+   * Add attributes
+   *
+   * @param \DistSys\ShopBundle\Entity\Attribute $attributes
+   * @return Product
+   */
+  public function setAttributes(\DistSys\ShopBundle\Entity\Attribute $attribute) {
+  	$this->attributes->clear();
+  	$this->attributes->add($attribute);
+  
+  	return $this;
+  }
 
   /**
    * Remove attributes

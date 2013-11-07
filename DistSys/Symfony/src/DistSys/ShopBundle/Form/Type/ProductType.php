@@ -55,6 +55,19 @@ class ProductType extends AbstractType {
 								'choices' => array(
 										true => 'verfügbar',
 										false => 'nicht verfügbar',),));
+		
+
+		$builder
+		->add('attributes', 'entity',
+				array(
+						'multiple' => true,
+						'attr' => array(
+								'class' => 'col-lg-10 form-control'),
+						'label' => 'Kategorie',
+						'label_attr' => array(
+								'class' => 'col-lg-2 control-label '),
+						'class' => 'DistSysShopBundle:Attribute',
+            'property' => 'name',));
 
 	}
 
