@@ -2,6 +2,8 @@
 
 namespace DistSys\ShopBundle\Controller;
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 class CartController extends Controller {
@@ -21,11 +23,9 @@ class CartController extends Controller {
 
       $resultComplete[$i]['id'] = $cartContent[$i]['id'];
       $resultComplete[$i]['amount'] = $cartContent[$i]['amount'];
-      $resultComplete[$i]['name'] = $result->getProductName();
+      $resultComplete[$i]['name'] = $result->getName();
       $resultComplete[$i]['price'] = $result->getPrice();
       $resultComplete[$i]['stock'] = $result->getStock();
-      $resultComplete[$i]['teaser'] = $result->getTeaser();
-      $resultComplete[$i]['image'] = $result->getPrepict();
     }
     unset($result);
 
@@ -41,7 +41,7 @@ class CartController extends Controller {
   public function addAction($productId) {
     // function to add a product to the currend ShoppingCart
     $session = $this->getRequest()->getSession();
-    $session->getFlashBag()->add('cartAdd', 'Produkt Nr.' . $productId . ' wurde Ihrem Warenkorb hinzugefügt.');
+    //$session->getFlashBag()->add('cartAdd', 'Produkt Nr.' . $productId . ' wurde Ihrem Warenkorb hinzugefügt.');
 
     if (!$session->has('cartContent')) {
       $cartContent = array();
@@ -59,6 +59,7 @@ class CartController extends Controller {
     $priceComplete += $this->getDoctrine()->getRepository('DistSysShopBundle:Product')->find($productId)->getPrice();
 
     $added = false;
+    
     #check if product already is in the cart; if so, count the amount up by one
     for ($k = 1; $k <= count($cartContent); $k++) {
       if ($cartContent[$k]['id'] === $productId) {
@@ -66,6 +67,7 @@ class CartController extends Controller {
         $added = true;
         break;
       }
+      
     }
 
     #add new product to Cart
@@ -79,9 +81,21 @@ class CartController extends Controller {
     $session->set('cartContent', $cartContent);
     $session->set('cartAmount', $cartAmount);
     $session->set('priceComplete', $priceComplete);
+    
+    $count = 0;
+    for ($u = 1; $u <= count($cartContent); $u++) {
+    	$count += 	$cartContent[$u]['amount'];
+    
+    
+    }
+    
+    $session->set('count', $count);
 
-    #redirect to the shopping cart  
-    return $this->redirect($this->generateUrl('schmucklisCartShow'));
+    #redirect to the shopping cart  $res = false;
+			$status = "Warenkorb erfolgreich befüllt.";
+		  $res = true;
+	
+		return new JsonResponse(array('res' => $res, 'status' => $status, 'count' => $count));
   }
 
   //function to remove an item from the Cart
@@ -123,7 +137,7 @@ class CartController extends Controller {
     $session->set('priceComplete', $priceComplete);
 
     #redirect to the shopping cart
-    return $this->redirect($this->generateUrl('schmucklisCartShow'));
+    return $this->redirect($this->generateUrl('my_cart'));
   }
 
   #function if the amount of an item in the Cart is changed 
@@ -147,7 +161,17 @@ class CartController extends Controller {
     $session->set('cartContent', $cartContent);
     $session->set('priceComplete', $priceComplete);
     #redirect to the shopping cart
-    return $this->redirect($this->generateUrl('schmucklisCartShow'));
+    
+    $count = 0;
+    for ($u = 1; $u <= count($cartContent); $u++) {
+    	$count += 	$cartContent[$u]['amount'];
+    
+    
+    }
+    
+    $session->set('count', $count);
+    
+    return $this->redirect($this->generateUrl('my_cart'));
   }
 
 }

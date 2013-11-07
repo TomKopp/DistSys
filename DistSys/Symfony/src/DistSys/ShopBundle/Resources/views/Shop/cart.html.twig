@@ -40,18 +40,14 @@
     <tr>
 
       <td colspan="1" class="prod-img">
-        <a href="{{ path ('showProduct', {'productId': product.id}) }}">
-          {% if product.galleryItems|first.imageUrl is defined %}
-          <img src="{{ asset('images/products/' ~ product.galleryItems|first.imageUrl) }}" alt="{{ product.galleryItems|first.imageAlt }}" title="{{ product.galleryItems|first.imageTitle }}">
-          {% else %}
-          <img src="http://dummyimage.com/300x300/cccccc/000000" alt="DistSys Image" title="DistSys Image">
-          {% endif %}
+        <a href="">
+
         </a>
       </td>{# /.prod-img #}
 
       <td colspan="1" class="prod-name">
-        <p><a href="{{ path ('showProduct', {'productId': product.id}) }}">{{ product.name }}</a></p>
-        <p>{{ product.teaser }}</p>
+        <p><a href="">{{ product.name }}</a></p>
+
       </td>{# /.prod-name #}
 
       <td colspan="1" class="prod-qty">
@@ -88,7 +84,7 @@
 
 <p class="p_sum">Summe: {{ priceComplete|number_format(2,',', '.' ) }} €</p>
 
-<form method="post" action="{{ path('checkout') }}">
+<form method="post" action="">
   <div class="submit_container">
     <input type="submit" value="zur Kasse">
   </div>

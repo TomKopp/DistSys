@@ -5,9 +5,7 @@
 {% set routeParam = 'baum' %}
 
 <ul class="nav navbar-nav">
-  <li>
-    <a href="{{ path('home') }}" title="Start" class="{% if path('home') is sameas(routeParam) %}active{% endif %}">Start</a>
-  </li>
+
 
   <li class="dropdown">
     <a href="{{ path('category', {'categoryId': 0}) }}" title="Produkte" data-toggle="dropdown" class="dropdown-toggle ">Produkte</a>
@@ -85,7 +83,7 @@
 
   <li class="">
     <a href="{{ path ('my_cart') }}">
-      <span class="badge pull-right">0 Artikel - 9,99 Euro</span>
+      <span class="badge pull-right">{{ app.session.get('count') }}</span>
       Warenkorb &nbsp;
     </a>
   </li>

@@ -40,11 +40,13 @@ class ShopController extends Controller {
     	//$products[$i]->teaser = $products[$i]->getGalleryItems()->first();
     }
     
+
+    
     return $this->render(
         'DistSysShopBundle:Shop:category.html.twig', array(
         'products' => $products,
         'pagination' => $pagination,
-        'categoryId' => $categoryId
+        'categoryId' => $categoryId,
         )
     );
   }

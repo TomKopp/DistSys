@@ -13,6 +13,8 @@
         <h2>
           <a class="prod-name" href="{{ path('product', {'productId': product.id}) }}">{{ product.name }}</a>
         </h2>
+        <a href="{{ path('add_cart', {'productId' : product.id}) }}" type="button" class="cart_add btn btn-primary">in den Warenkorb</a>
+      
       </div>
     </article>
   </li>

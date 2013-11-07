@@ -44,6 +44,8 @@ $(document).ready(function(){
 	prodDelete();
 	prodEdit();
 	
+	cart_add();
+	
 	
 	function passwordForm(){
 	  $("#password-form").submit( function( e ){
@@ -438,6 +440,7 @@ $(document).ready(function(){
 			 href = $(this).attr('href');
 			 $.get(href, function( data ) {
 				  $( ".products" ).html( data );
+				  cart_add();
 				  if (data.status == true){
 					  
 				  }
@@ -452,5 +455,26 @@ $(document).ready(function(){
   
   
   /* ---- */
+  
+  /*   cart */
+  function cart_add(){
+	  $('.cart_add ').each(function(){
+			 $(this).click(function(){
+				 href = $(this).attr('href');
+				 $.get(href, function( data ) {
+					 
+					  if (data.res == true){
+						  $('.badge').html(data.count);
+					  }
+				  });
+				 
+				 
+				 
+				 
+				 return false;
+			 });
+	  });
+  }
+  /*   */
 	 
 });

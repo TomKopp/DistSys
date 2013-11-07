@@ -141,6 +141,19 @@ my_cart:
   pattern: /myCart
   defaults: { _controller: DistSysShopBundle:Cart:index }
   
+cartChange:
+  pattern: /cart/change/{productId}
+  defaults: { _controller: DistSysShopBundle:Cart:change }
+  
+  
+cartRemove:
+  pattern: /cart/remove/{productId}
+  defaults: { _controller: DistSysShopBundle:Cart:remove }
+add_cart:
+  pattern: /cart/add/{productId}
+  defaults: { _controller: DistSysShopBundle:Cart:add }
+  
+  
 # shop zeug
 
 category:
