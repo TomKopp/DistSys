@@ -1,0 +1,55 @@
+
+<h1>Neues Produkt anlegen</h1>
+<form class="form-horizontal" id="prod-form" action="{{ path('admin_product_save') }}" method="post" {{ form_enctype(prodForm) }}>
+      {% if error is defined %} 
+    {{ error }}
+  {% endif %}
+  <div class="form-group">
+  {{ form_label(prodForm.name) }}
+  {{ form_errors(prodForm.name) }}
+	  <div class="col-lg-5">
+	    {{ form_widget(prodForm.name) }}
+	  </div>
+  </div>
+  <div class="form-group">
+  {{ form_label(prodForm.description) }}
+  {{ form_errors(prodForm.description) }}
+	  <div class="col-lg-5">
+	    {{ form_widget(prodForm.description) }}
+	  </div>
+  </div>
+  <div class="form-group">
+  {{ form_label(prodForm.price) }}
+  {{ form_errors(prodForm.price) }}
+	  <div class="col-lg-5">
+	    {{ form_widget(prodForm.price) }}
+	  </div>
+  </div>
+  <div class="form-group">
+  {{ form_label(prodForm.stock) }}
+  {{ form_errors(prodForm.stock) }}
+	  <div class="col-lg-5">
+	    {{ form_widget(prodForm.stock) }}
+	  </div>
+  </div>
+  <div class="form-group">
+  {{ form_label(prodForm.status) }}
+  {{ form_errors(prodForm.status) }}
+	  <div class="col-lg-5">
+	    {{ form_widget(prodForm.status) }}
+	  </div>
+  </div>
+
+    <p>
+        <button class="btn btn-primary" type="submit">speichern</button>
+    </p>
+    <p class="res">
+    </p>
+    {{ form_end(prodForm) }}
+    <p>&nbsp;
+    </p>
+    <p>&nbsp;
+    </p>
+    <p>&nbsp;
+    </p>
+</form>

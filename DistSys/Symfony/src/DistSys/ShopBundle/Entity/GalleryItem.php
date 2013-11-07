@@ -35,6 +35,13 @@ class GalleryItem {
    * @var Assert
    */
   private $file;
+  
+  /**
+   * Constructor
+   */
+  public function __construct() {
+  	$this->product = new \Doctrine\Common\Collections\ArrayCollection();
+  }
 
   /**
    * Get id

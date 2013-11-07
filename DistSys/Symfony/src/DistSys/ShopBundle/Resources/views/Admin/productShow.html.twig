@@ -1,0 +1,53 @@
+
+<h2 class="heading style1">Produkt {{ prod.id }}</h2>
+
+
+    <div class="row">
+      <div class="col-sm-2">
+        <strong>Titel: </strong>
+      </div>
+      <div class="col-sm-2">
+        {{ prod.name }}
+      </div>
+   </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <strong>Beschreibung: </strong>
+      </div>
+      <div class="col-sm-2">
+        {{ prod.description }}
+      </div>
+   </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <strong>Preis: </strong>
+      </div>
+      <div class="col-sm-2">
+        {{ prod.price }}
+      </div>
+   </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <strong>Verfügbare Menge: </strong>
+      </div>
+      <div class="col-sm-2">
+        {{ prod.stock }}
+      </div>
+   </div>
+    <div class="row">
+      <div class="col-sm-2">
+        <strong>Status: </strong>
+      </div>
+      <div class="col-sm-2">
+      {% if prod.status == 1 %}
+        verfügbar
+      {% else %}
+        nicht verfügbar
+      {% endif %}
+      </div>
+   </div>
+        
+
+      
+    
+

@@ -1,7 +1,9 @@
 {% extends 'DistSysShopBundle::Scaffolding/scaffolding.html.twig' %}
 
 {% block main %}
+{% if site is defined %}
 <h2>{{ site.content|raw }}</h2>
+{% endif %}
 
 <p>&nbsp;</p>
 <p>&nbsp;</p>

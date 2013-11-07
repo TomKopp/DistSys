@@ -29,13 +29,20 @@ function postForm( $form, callback ){
 $(document).ready(function(){
 	passwordForm();
 	profileForm();
+	
 	userShow();
 	userEdit();
 	userDelete();
+	
 	catShow();
 	catNew();
 	catDelete();
 	catEdit();
+
+	prodShow();
+	prodNew();
+	prodDelete();
+	prodEdit();
 	
 	
 	function passwordForm(){
@@ -278,6 +285,137 @@ $(document).ready(function(){
   }
   function catDelete(){
 	  $('.catDelete').each(function(){
+			 $(this).click(function(){
+				 href = $(this).attr('href');
+				 tr = $(this).parent().parent();
+				 $.get(href, function( data ) {
+					  $( "#render" ).html( data.res );
+					  if (data.status == true){
+						  $(tr).hide("slow");
+					  }
+				  });
+				 return false;
+			 }) ;
+			  
+		  });
+  }
+  /* end admin categorie */
+  
+  /* admin product */
+  function prodShow(){
+  $('.prodShow').each(function(){
+		 $(this).click(function(){
+			 href = $(this).attr('href');
+			 $.get(href, function( data ) {
+				 $( "#render" ).hide();
+				  $( "#render" ).html( data );
+				  $( "#render" ).show("slow");
+				  
+			  });
+			 return false;
+		 }) ;
+		  
+	  });
+  }
+  function prodNew(){
+     $('.prodNew').each(function(){
+		 $(this).click(function(){
+			 href = $(this).attr('href');
+			 $.get(href, function( data ) {
+				 $( "#render" ).hide();
+				  $( "#render" ).html( data );
+				  $( "#render" ).show("slow");
+				  $("#prod-form").submit( function( e ){
+					  
+					    e.preventDefault();
+					    postForm( $(this), function( response ){
+					      $('.res').html(response.status);
+					      if (response.res){
+					    	  $('.res').addClass("text-success");
+					    	  $('.res').removeClass("text-danger");
+					      }else {
+					    	  $('.res').removeClass("text-success");
+					    	  $('.res').addClass("text-danger");
+					    	 
+					      }
+					      index = href.lastIndexOf("/");
+					      newHref = href.substring(0, index);
+					      index = newHref.lastIndexOf("/");
+					      newHref = newHref.substring(0, index+1);
+					      $.get(newHref+"product/part", function( data ) {
+						    	$( "#main table" ).html( data );
+						    	prodShow();
+						    	prodEdit();
+						    	prodDelete();
+								 $( "#render" ).delay(2000).hide("slow");
+						    });
+					      
+					    });
+					    
+					    
+					 
+					    return false;
+					  });
+				  
+			  });
+			 return false;
+		 }) ;
+		  
+	  });
+  }
+  function prodEdit(){
+	  $('.prodEdit').each(function(){
+			 $(this).click(function(){
+				 href = $(this).attr('href');
+				 $.get(href, function( data ) {
+					 $( "#render" ).hide();
+					  $( "#render" ).html( data );
+					  $( "#render" ).show("slow");
+					  $("#prod-form").submit( function( e ){
+						  
+						    e.preventDefault();
+						    postForm( $(this), function( response ){
+						      $('.res').html(response.status);
+						      if (response.res){
+						    	  $('.res').addClass("text-success");
+						    	  $('.res').removeClass("text-danger");
+						      }else {
+						    	  $('.res').removeClass("text-success");
+						    	  $('.res').addClass("text-danger");
+						    	 
+						      }
+						      index = href.lastIndexOf("/");
+						      newHref = href.substring(0, index);
+						      index = newHref.lastIndexOf("/");
+						      newHref = newHref.substring(0, index+1);
+						      $.get(newHref+"part", function( data ) {
+							    	$( "#main table" ).html( data );
+							    	prodShow();
+							    	prodEdit();
+							    	prodDelete();
+
+									 $( "#render" ).delay(2000).hide("slow");
+							    });
+						      
+						    });
+						    
+						    
+						 
+						    return false;
+						  });
+				  });
+				 
+				 
+				  
+				 
+				 
+				 return false;
+			 }) ;
+			  
+		  });
+  }
+  function prodDelete(){
+	  $('.prodDelete').each(function(){
 			 $(this).click(function(){
 				 href = $(this).attr('href');
 				 tr = $(this).parent().parent();

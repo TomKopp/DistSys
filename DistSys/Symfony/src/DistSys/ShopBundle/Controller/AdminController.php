@@ -1,6 +1,10 @@
 <?php
 
 namespace DistSys\ShopBundle\Controller;
+use DistSys\ShopBundle\Form\Type\ProductType;
+
+use DistSys\ShopBundle\Entity\Product;
+
 use DistSys\ShopBundle\Entity\Attribute;
 
 use DistSys\ShopBundle\Form\Type\CategorieType;
@@ -207,6 +211,128 @@ class AdminController extends Controller {
 			// Weiterleitung zur Übersicht
 			$res = true;
 			$status = "Kategorie erfolgreich geändert.";
+		} else {
+			// Zurück mit Fehlerausgabe
+			$res = false;
+			$status = "Bitte füllen Sie alle benötigten Felder aus.";
+		}
+	
+		return new JsonResponse(array('res' => $res, 'status' => $status));
+	
+	}
+	
+	public function productAction() {
+		$em = $this->getDoctrine()->getManager();
+		$products = $em->getRepository('DistSysShopBundle:Product')->findAll();
+	
+		return $this
+		->render('DistSysShopBundle:Admin:product.html.twig',
+				array('products' => $products));
+	}
+
+	public function productPartAction() {
+		$em = $this->getDoctrine()->getManager();
+		$products = $em->getRepository('DistSysShopBundle:Product')
+		->findAll();
+	
+		return $this
+		->render('DistSysShopBundle:Admin:productPart.html.twig',
+				array('products' => $products));
+	}
+	
+	public function productNewAction() {
+		$em = $this->getDoctrine()->getManager();
+		$prodForm = $this->createForm(new ProductType(), new Product());
+	
+		return $this
+		->render('DistSysShopBundle:Admin:productNew.html.twig',
+				array('prodForm' => $prodForm->createView()));
+	}
+	
+
+	
+	
+	public function productSaveAction() {
+	
+		$em = $this->getDoctrine()->getManager();
+		$form = $this->createForm(new ProductType(), new Product());
+		$form->bind($this->getRequest());
+	
+		// Speichern, wenn das Formular Valid ist
+		if ($form->isValid()) {
+			$prod = $form->getData();
+      // TODO
+	
+			// Adresse in die Datenbank speichern
+			$em->persist($prod);
+			$em->flush();
+	
+			// Weiterleitung zur Übersicht
+			$res = true;
+			$status = "Erfolgreich angelegt.";
+		} else {
+			// Zurück mit Fehlerausgabe
+			$res = false;
+			$status = "Bitte füllen Sie alle benötigten Felder aus.";
+		}
+	
+		return new JsonResponse(array('res' => $res, 'status' => $status));
+	
+	}
+	
+	public function productRemoveAction($id) {
+		$em = $this->getDoctrine()->getManager();
+		$prod = $em->getRepository('DistSysShopBundle:Product')->findOneById($id);
+	
+	
+		$em->remove($prod);
+		$em->flush();
+		$status = true;
+		$res = "Produkt erfolgreich gelöscht!";
+	
+		return new JsonResponse(array('res' => $res, 'status' => $status));
+	}
+	
+
+	public function productShowAction($id) {
+		$em = $this->getDoctrine()->getManager();
+		$prod = $em->getRepository('DistSysShopBundle:Product')
+		->findOneById($id);
+	
+		return $this
+		->render('DistSysShopBundle:Admin:productShow.html.twig',
+				array('prod' => $prod));
+	}
+	
+	public function productEditAction($id) {
+		$em = $this->getDoctrine()->getManager();
+		$prod = $em->getRepository('DistSysShopBundle:Product')->findOneById($id);
+		$prodForm = $this->createForm(new ProductType(), $prod);
+	
+		return $this
+		->render('DistSysShopBundle:Admin:productEdit.html.twig',
+				array('prod' => $prod,
+						'prodForm' => $prodForm->createView()));
+	}
+	
+	public function productUpdateAction($id) {
+	
+		$em = $this->getDoctrine()->getManager();
+		$prod = $em->getRepository('DistSysShopBundle:Product')->findOneById($id);
+		$form = $this->createForm(new ProductType(), $prod);
+		$form->bind($this->getRequest());
+	
+		// Speichern, wenn das Formular Valid ist
+		if ($form->isValid()) {
+			$user = $form->getData();
+	
+			// Adresse in die Datenbank speichern
+			$em->persist($prod);
+			$em->flush();
+	
+			// Weiterleitung zur Übersicht
+			$res = true;
+			$status = "Produkt erfolgreich geändert.";
 		} else {
 			// Zurück mit Fehlerausgabe
 			$res = false;

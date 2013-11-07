@@ -68,7 +68,7 @@
 		      {% if is_granted('ROLE_ADMIN') %}
       <li class="divider"></li>
       <li class="dropdown-header">Admin Control Panel</li>
-      <li><a href="#">Produkte</a></li>
+      <li><a href="{{ path('admin_product') }}">Produkte</a></li>
       <li><a href="{{ path('admin_categorie') }}">Kategorien</a></li>
       <li><a href="{{ path('admin_user') }}">User</a></li>
 		    {% endif %}

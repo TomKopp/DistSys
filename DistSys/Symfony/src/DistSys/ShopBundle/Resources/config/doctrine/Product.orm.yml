@@ -32,7 +32,6 @@ DistSys\ShopBundle\Entity\Product:
     galleryItems:
       targetEntity: GalleryItem
       mappedBy: id
-      cascade: ["all"]
     bookingItems:
       targetEntity: BookingItem
       mappedBy: id

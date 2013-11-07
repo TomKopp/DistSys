@@ -28,6 +28,14 @@ class BookingItem
      * @var \DistSys\ShopBundle\Entity\Product
      */
     private $product;
+    
+    /**
+     * Constructor
+     */
+    public function __construct() {
+    	$this->product = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
 
 
     /**

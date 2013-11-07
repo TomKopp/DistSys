@@ -80,6 +80,39 @@ admin_categorie_remove:
     defaults: { _controller: DistSysShopBundle:Admin:categorieRemove }
     
     
+admin_product:
+    pattern: /admin/product    
+    defaults: { _controller: DistSysShopBundle:Admin:product }
+    
+admin_product_part:
+    pattern: /admin/product/part  
+    defaults: { _controller: DistSysShopBundle:Admin:productPart }
+    
+admin_product_new:
+    pattern: /admin/product/new    
+    defaults: { _controller: DistSysShopBundle:Admin:productNew }
+    
+admin_product_save:
+    pattern: /admin/product/save    
+    defaults: { _controller: DistSysShopBundle:Admin:productSave }
+    
+admin_product_edit:
+    pattern: /admin/product/edit/{id}
+    defaults: { _controller: DistSysShopBundle:Admin:productEdit }
+    
+admin_product_update:
+    pattern: /admin/product/update/{id}
+    defaults: { _controller: DistSysShopBundle:Admin:productUpdate }
+    
+admin_product_show:
+    pattern: /admin/product/show/{id}
+    defaults: { _controller: DistSysShopBundle:Admin:productShow }
+    
+admin_product_remove:
+    pattern: /admin/product/remove/{id}  
+    defaults: { _controller: DistSysShopBundle:Admin:productRemove }
+    
+    
 # profil zeugs   
     
 user:
@@ -124,4 +157,9 @@ product:
 
 home:
     pattern:  /{url}
-    defaults: { _controller: DistSysShopBundle:Default:index, url: 'frontpage' }
+    defaults: { _controller: DistSysShopBundle:Default:simpleSite, url: 'frontpage' }
+    
+    
+default:
+    pattern:  /
+    defaults: { _controller: DistSysShopBundle:Default:index }
