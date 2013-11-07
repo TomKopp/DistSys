@@ -37,6 +37,11 @@ class CartController extends Controller {
         )
     );
   }
+  
+  public function checkoutAction() {
+  	
+  	
+  }
 
   public function addAction($productId) {
     // function to add a product to the currend ShoppingCart
