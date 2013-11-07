@@ -3,15 +3,15 @@
 {% block main %}
 <article class="product">
 {% if product is not sameas(null) %}
-  {% if product.galleryItems|first.imageUrl is defined %}
-  <img src="{{ asset('images/products/' ~ product.galleryItems|first.imageUrl) }}" alt="{{ product.galleryItems|first.imageAlt }}" title="{{ product.galleryItems|first.imageTitle }}">
-  {% else %}
+  {% if product.teaser is not null %}
+  <img width="360px"  height="288px" src="{{ asset('uploads/documents/' ~ product.teaser.imgUrl) }}" alt="{{ product.teaser.imgAlt }}" title="{{ product.teaser.imgTitle }}">
+        {% else %}
   <img src="http://dummyimage.com/300x300/cccccc/000000" alt="DistSys Image" title="DistSys Image">
   {% endif %}
 
   <div class="wrapper">
     <div class="prod-attr">
-      <h1>{{ product.productName }}</h1>
+      <h1>{{ product.name }}</h1>
       <p>Artikelnummer: {{ product.id }}</p>
       <p>{{ product.description }}</p>
       <ul>
@@ -33,7 +33,7 @@
       <p class="prod-price">{{ product.price|number_format(2,',', '.' )}} €</p>
       <p>inkl. 19% MwSt<br>zzgl. Versand</p>
       {% if product.stock > 0 %}
-      <form class="into-cart-form" method="post" action="{{ path('DistSysCartAdd', {'productId': product.id}) }}">
+      <form class="into-cart-form" method="post" action="">
         <div class="submit-container">
           <input type="submit" name="in den Warenkorb" value="" class="into-cart">
         </div>
@@ -48,11 +48,11 @@
 {% endif %}
 
 </article>
-
+{# 
 {% if product is not sameas(null) %}
 <asside class="related-products">
   <h2>Das könnte Sie auch interessieren</h2>
-  {% render(controller('DistSysShopBundle:Shop:renderRelatedProducts', {'productId': product.id})) %}
-</asside>
+{% render(controller('DistSysShopBundle:Shop:renderRelatedProducts', {'productId': product.id})) %} 
+</asside>#}
 {% endif %}
 {% endblock %}

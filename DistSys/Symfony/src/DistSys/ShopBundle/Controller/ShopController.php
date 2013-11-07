@@ -97,6 +97,9 @@ class ShopController extends Controller {
     $to_render['product'] = $this->getDoctrine()->getRepository('DistSysShopBundle:Product')->find($productId);
     $to_render['lastUrl'] = $this->getRequest()->headers->get('referer');
     $to_render['categories'] = NULL;
+    
+    $to_render['product']->teaser = $this->getDoctrine()->getRepository('DistSysShopBundle:GalleryItem')->findOneByProduct($productId);
+    
 
     // get Array for Attributes, sorted by Category
 //    $attributes = $to_render['product']->getAttributes();

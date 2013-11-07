@@ -82,8 +82,12 @@
   </li>
   {% endif %}
   
-  <li>
-    <a href="{{ path ('my_cart') }}" title="Cart" class="">Warenkorb</a>
+
+  <li class="">
+    <a href="{{ path ('my_cart') }}">
+      <span class="badge pull-right">0 Artikel - 9,99 Euro</span>
+      Warenkorb &nbsp;
+    </a>
   </li>
 
 </ul>{# /.nav .navbar-nav #}
