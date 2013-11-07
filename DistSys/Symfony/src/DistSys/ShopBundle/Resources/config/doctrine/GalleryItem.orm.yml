@@ -26,7 +26,3 @@ DistSys\ShopBundle\Entity\GalleryItem:
       targetEntity: Product
       inversedBy: galleryItems
 
-  lifecycleCallbacks:
-    prePersist: [preUpload]
-    postPersist: [uploadFile]
-    postRemove: [removeUpload]

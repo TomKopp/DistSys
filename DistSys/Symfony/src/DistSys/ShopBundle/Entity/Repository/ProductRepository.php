@@ -29,7 +29,7 @@ class ProductRepository extends EntityRepository {
     $qb = $this->createQueryBuilder('p');
     $qb->select('p')
       ->join('p.attributes', 'a')
-      ->where('a.attributeType = :attrId')
+      ->where('a.id = :attrId')
       ->setParameter('attrId', $attrId);
 
 
@@ -40,7 +40,7 @@ class ProductRepository extends EntityRepository {
       $qb->setMaxResults($limit);
     }
     if (isset($order)) {
-      $qb->orderBy('p.productName', $order);
+      $qb->orderBy('p.name', $order);
     }
 
     return $qb->getQuery()->getResult();

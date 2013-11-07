@@ -7,7 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ProductType extends AbstractType {
+class ProductEditType extends AbstractType {
 
 	public function buildForm(FormBuilderInterface $builder, array $options) {
 		$builder
@@ -71,23 +71,7 @@ class ProductType extends AbstractType {
 						'class' => 'DistSysShopBundle:Attribute',
             'property' => 'name',));
 		
-		$builder
-		->add('galleryItems', 'entity',
-				array(
-						'multiple' => true,
-						'attr' => array(
-								'class' => 'col-lg-10 form-control'),
-						'label' => 'Vorschaubild',
-						'label_attr' => array(
-								'class' => 'col-lg-2 control-label '),
-						'class' => 'DistSysShopBundle:GalleryItem',
-						'property' => 'imgTitle',
-						'query_builder' => function ($repository) {
-							$qb = $repository->createQueryBuilder('g');
-							$qb->add('where', 'g.product is null');
-							return $qb;
-						},
-		));
+
 
 	}
 

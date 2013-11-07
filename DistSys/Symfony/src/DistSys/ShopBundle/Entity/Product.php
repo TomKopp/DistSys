@@ -188,6 +188,19 @@ class Product {
 
     return $this;
   }
+  
+  /**
+   * Add galleryItems
+   *
+   * @param \DistSys\ShopBundle\Entity\GalleryItem $galleryItems
+   * @return Product
+   */
+  public function setGalleryItem(\DistSys\ShopBundle\Entity\GalleryItem $galleryItem) {
+  	$this->galleryItems->clear();
+  	$this->galleryItems[] = $galleryItem;
+  
+  	return $this;
+  }
 
   /**
    * Remove galleryItems

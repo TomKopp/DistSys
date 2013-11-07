@@ -1,5 +1,5 @@
 
-<h1>Nutzerdaten</h1>
+<h1>Produkt bearbeiten</h1>
 <form class="form-horizontal" id="prod-form" action="{{ path('admin_product_update', {'id': prod.id}) }}" method="post" {{ form_enctype(prodForm) }}>
       {% if error is defined %} 
     {{ error }}

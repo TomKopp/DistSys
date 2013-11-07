@@ -13,13 +13,15 @@ class ShopController extends Controller {
    * @return render twig
    */
   public function categoryAction($categoryId) {
-    $prodQantityPerSite = 8;
+    $prodQantityPerSite = 3;
     $doctrine = $this->getDoctrine();
     $request = $this->getRequest();
     $pagination = NULL;
 
     // Pagination
     $allProductsInCategory = $doctrine->getRepository('DistSysShopBundle:Product')->getProductsByAttribute($categoryId);
+    
+    
     $request->get('pagination') ? $currentSite = $request->get('pagination') : $currentSite = 0;
     
     for ($i = 0; $i < ceil(count($allProductsInCategory) / $prodQantityPerSite); $i++) {
@@ -31,7 +33,13 @@ class ShopController extends Controller {
     }
 
     $products = $doctrine->getRepository('DistSysShopBundle:Product')->getProductsByAttribute($categoryId, array('offset' => ($currentSite * $prodQantityPerSite), 'limit' => $prodQantityPerSite));
-
+    $em = $this->getDoctrine()->getManager();
+    
+    for ($i = 0; $i < count($products); $i++){
+    	$products[$i]->teaser = $em->getRepository('DistSysShopBundle:GalleryItem')->findOneByProduct($products[$i]->getId());
+    	//$products[$i]->teaser = $products[$i]->getGalleryItems()->first();
+    }
+    
     return $this->render(
         'DistSysShopBundle:Shop:category.html.twig', array(
         'products' => $products,
@@ -39,6 +47,43 @@ class ShopController extends Controller {
         'categoryId' => $categoryId
         )
     );
+  }
+  
+  public function categoryPartAction($categoryId) {
+  	$prodQantityPerSite = 3;
+  	$doctrine = $this->getDoctrine();
+  	$request = $this->getRequest();
+  	$pagination = NULL;
+  
+  	// Pagination
+  	$allProductsInCategory = $doctrine->getRepository('DistSysShopBundle:Product')->getProductsByAttribute($categoryId);
+  
+  
+  	$request->get('pagination') ? $currentSite = $request->get('pagination') : $currentSite = 0;
+  
+  	for ($i = 0; $i < ceil(count($allProductsInCategory) / $prodQantityPerSite); $i++) {
+  		if ($currentSite === $i) {
+  			$pagination[$i]['active'] = TRUE;
+  		} else {
+  			$pagination[$i]['active'] = FALSE;
+  		}
+  	}
+  
+  	$products = $doctrine->getRepository('DistSysShopBundle:Product')->getProductsByAttribute($categoryId, array('offset' => ($currentSite * $prodQantityPerSite), 'limit' => $prodQantityPerSite));
+  	$em = $this->getDoctrine()->getManager();
+  
+  	for ($i = 0; $i < count($products); $i++){
+  		$products[$i]->teaser = $em->getRepository('DistSysShopBundle:GalleryItem')->findOneByProduct($products[$i]->getId());
+  		//$products[$i]->teaser = $products[$i]->getGalleryItems()->first();
+  	}
+  
+  	return $this->render(
+  			'DistSysShopBundle:Shop:categoryPart.html.twig', array(
+  					'products' => $products,
+  					'pagination' => $pagination,
+  					'categoryId' => $categoryId
+  			)
+  	);
   }
 
   /**

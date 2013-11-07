@@ -431,5 +431,26 @@ $(document).ready(function(){
 		  });
   }
   /* end admin categorie */
+  
+  /* pagination */
+  $('.pagination a').each(function(){
+		 $(this).click(function(){
+			 href = $(this).attr('href');
+			 $.get(href, function( data ) {
+				  $( ".products" ).html( data );
+				  if (data.status == true){
+					  
+				  }
+			  });
+			 
+			 
+			 
+			 
+			 return false;
+		 });
+  });
+  
+  
+  /* ---- */
 	 
 });

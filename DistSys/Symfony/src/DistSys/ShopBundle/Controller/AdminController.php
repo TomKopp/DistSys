@@ -1,6 +1,12 @@
 <?php
 
 namespace DistSys\ShopBundle\Controller;
+use DistSys\ShopBundle\Form\Type\ProductEditType;
+
+use DistSys\ShopBundle\Form\Model\ProductForm;
+
+use DistSys\ShopBundle\Form\Type\ProductFormType;
+
 use DistSys\ShopBundle\Form\Type\ProductType;
 
 use DistSys\ShopBundle\Entity\Product;
@@ -242,11 +248,15 @@ class AdminController extends Controller {
 	
 	public function productNewAction() {
 		$em = $this->getDoctrine()->getManager();
-		$prodForm = $this->createForm(new ProductType(), new Product());
+		
+
+		
+		$prodForm = $this->createForm(new ProductFormType(), new ProductForm());
 	
 		return $this
 		->render('DistSysShopBundle:Admin:productNew.html.twig',
-				array('prodForm' => $prodForm->createView()));
+				array('prodForm' => $prodForm->createView(),
+						  'image' => null));
 	}
 	
 
@@ -255,15 +265,32 @@ class AdminController extends Controller {
 	public function productSaveAction() {
 	
 		$em = $this->getDoctrine()->getManager();
-		$form = $this->createForm(new ProductType(), new Product());
-		$form->bind($this->getRequest());
+		
+    $form = $this->createForm(new ProductFormType(), new ProductForm());
+                // Request abgreifen
+    $form->bind($this->getRequest());
 	
 		// Speichern, wenn das Formular Valid ist
 		if ($form->isValid()) {
-			$prod = $form->getData();
+			
+			
+			$formData = $form->getData();
+			
+			// Produkt und Bild anlegen
+			$prod = $formData->getProduct();
+			
+
+			$gal = $em->getRepository('DistSysShopBundle:GalleryItem')->findOneById($prod->getGalleryItems()->first());
+			$gal->setProduct($prod);
+			
+			$prod->setGalleryItem($gal);
+			// Bild und Produkt in die Datenbak speichenr
+			//$em->persist($galleryItem);
+
       // TODO
 	
 			// Adresse in die Datenbank speichern
+			$em->persist($gal);
 			$em->persist($prod);
 			$em->flush();
 	
@@ -284,7 +311,13 @@ class AdminController extends Controller {
 		$em = $this->getDoctrine()->getManager();
 		$prod = $em->getRepository('DistSysShopBundle:Product')->findOneById($id);
 	
+		$gal = $em->getRepository('DistSysShopBundle:GalleryItem')->findOneByProduct($id);
+		if (!is_null($gal)){
+			$gal->setProduct(null);
 	
+			$em->persist($gal);
+		}
+		
 		$em->remove($prod);
 		$em->flush();
 		$status = true;
@@ -307,7 +340,7 @@ class AdminController extends Controller {
 	public function productEditAction($id) {
 		$em = $this->getDoctrine()->getManager();
 		$prod = $em->getRepository('DistSysShopBundle:Product')->findOneById($id);
-		$prodForm = $this->createForm(new ProductType(), $prod);
+		$prodForm = $this->createForm(new ProductEditType(), $prod);
 	
 		return $this
 		->render('DistSysShopBundle:Admin:productEdit.html.twig',
@@ -319,7 +352,7 @@ class AdminController extends Controller {
 	
 		$em = $this->getDoctrine()->getManager();
 		$prod = $em->getRepository('DistSysShopBundle:Product')->findOneById($id);
-		$form = $this->createForm(new ProductType(), $prod);
+		$form = $this->createForm(new ProductEditType(), $prod);
 		$form->bind($this->getRequest());
 	
 		// Speichern, wenn das Formular Valid ist

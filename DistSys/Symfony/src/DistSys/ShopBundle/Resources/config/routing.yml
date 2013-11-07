@@ -148,6 +148,12 @@ category:
   defaults: { _controller: DistSysShopBundle:Shop:category }
   requirements:
     productId: \d+
+    
+category_part:
+  pattern: /categoryPart/{categoryId}
+  defaults: { _controller: DistSysShopBundle:Shop:categoryPart }
+  requirements:
+    productId: \d+
 
 product:
   pattern: /product/{productId}

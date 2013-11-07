@@ -5,47 +5,55 @@
     {{ error }}
   {% endif %}
   <div class="form-group">
-  {{ form_label(prodForm.name) }}
-  {{ form_errors(prodForm.name) }}
+  {{ form_label(prodForm.product.name) }}
+  {{ form_errors(prodForm.product.name) }}
 	  <div class="col-lg-5">
-	    {{ form_widget(prodForm.name) }}
+	    {{ form_widget(prodForm.product.name) }}
 	  </div>
   </div>
   <div class="form-group">
-  {{ form_label(prodForm.description) }}
-  {{ form_errors(prodForm.description) }}
+  {{ form_label(prodForm.product.description) }}
+  {{ form_errors(prodForm.product.description) }}
 	  <div class="col-lg-5">
-	    {{ form_widget(prodForm.description) }}
+	    {{ form_widget(prodForm.product.description) }}
 	  </div>
   </div>
   <div class="form-group">
-  {{ form_label(prodForm.price) }}
-  {{ form_errors(prodForm.price) }}
+  {{ form_label(prodForm.product.price) }}
+  {{ form_errors(prodForm.product.price) }}
 	  <div class="col-lg-5">
-	    {{ form_widget(prodForm.price) }}
+	    {{ form_widget(prodForm.product.price) }}
 	  </div>
   </div>
   <div class="form-group">
-  {{ form_label(prodForm.stock) }}
-  {{ form_errors(prodForm.stock) }}
+  {{ form_label(prodForm.product.stock) }}
+  {{ form_errors(prodForm.product.stock) }}
 	  <div class="col-lg-5">
-	    {{ form_widget(prodForm.stock) }}
+	    {{ form_widget(prodForm.product.stock) }}
 	  </div>
   </div>
   <div class="form-group">
-  {{ form_label(prodForm.status) }}
-  {{ form_errors(prodForm.status) }}
+  {{ form_label(prodForm.product.status) }}
+  {{ form_errors(prodForm.product.status) }}
 	  <div class="col-lg-5">
-	    {{ form_widget(prodForm.status) }}
+	    {{ form_widget(prodForm.product.status) }}
 	  </div>
   </div>
   <div class="form-group">
-  {{ form_label(prodForm.attributes) }}
-  {{ form_errors(prodForm.attributes) }}
+  {{ form_label(prodForm.product.attributes) }}
+  {{ form_errors(prodForm.product.attributes) }}
 	  <div class="col-lg-5">
-	    {{ form_widget(prodForm.attributes) }}
+	    {{ form_widget(prodForm.product.attributes) }}
 	  </div>
   </div>
+  <div class="form-group">
+  {{ form_label(prodForm.product.galleryItems) }}
+  {{ form_errors(prodForm.product.galleryItems) }}
+	  <div class="col-lg-5">
+	    {{ form_widget(prodForm.product.galleryItems) }}
+	  </div>
+  </div>
+  
 
     <p>
         <button class="btn btn-primary" type="submit">speichern</button>

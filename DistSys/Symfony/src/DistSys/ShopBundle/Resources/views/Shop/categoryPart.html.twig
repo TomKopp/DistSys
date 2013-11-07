@@ -1,0 +1,20 @@
+
+  {% for product in products %}
+  <li class="hl-lvl-0 col-sm-6 col-md-4">
+    <article class="thumbnail">
+      <a href="{{ path('product', {'productId': product.id}) }}">
+        {% if product.teaser is not null %}
+        <img width="360px" height="288px" src="{{ asset('uploads/documents/' ~ product.teaser.imgUrl) }}" alt="{{ product.teaser.imgAlt }}" title="{{ product.teaser.imgTitle }}">
+        {% else %}
+        <img src="http://dummyimage.com/300x300/cccccc/000000" alt="DistSys Image" title="DistSys Image">
+        {% endif %}
+      </a>
+      <div class="caption">
+        <h2>
+          <a class="prod-name" href="{{ path('product', {'productId': product.id}) }}">{{ product.name }}</a>
+        </h2>
+      </div>
+    </article>
+  </li>
+
+{% endfor %}
