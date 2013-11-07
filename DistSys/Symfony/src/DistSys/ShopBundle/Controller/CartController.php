@@ -135,6 +135,15 @@ class CartController extends Controller {
 
     $session->set('cartAmount', $cartAmount);
     $session->set('priceComplete', $priceComplete);
+    
+    $count = 0;
+    for ($u = 1; $u <= count($cartContent); $u++) {
+    	$count += 	$cartContent[$u]['amount'];
+    
+    
+    }
+    
+    $session->set('count', $count);
 
     #redirect to the shopping cart
     return $this->redirect($this->generateUrl('my_cart'));
