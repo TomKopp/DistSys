@@ -24,13 +24,13 @@
 
 
 {# product list #}
-<table>
+<table class="table">
   <thead>
     <tr>
-      <th colspan="1" scope="col" class="invisible">Bild</th>
-      <th colspan="1" scope="col" class="invisible">Produktname</th>
+      <th colspan="1" scope="col" class="invisible"></th>
       <th colspan="1" scope="col">Anzahl</th>
       <th colspan="1" scope="col">Preis</th>
+      <th colspan="1" scope="col">Gesamt</th>
       <th colspan="1" scope="col">Entfernen</th>
     </tr>
   </thead>
@@ -39,11 +39,6 @@
   {% for product in cartContent %}
     <tr>
 
-      <td colspan="1" class="prod-img">
-        <a href="">
-
-        </a>
-      </td>{# /.prod-img #}
 
       <td colspan="1" class="prod-name">
         <p><a href="">{{ product.name }}</a></p>
@@ -52,7 +47,7 @@
 
       <td colspan="1" class="prod-qty">
         <form method="post" action="{{ path('cartChange', {'productId': product.id }) }}">
-          <select name="prod_anz" id="prod_anz" onchange="this.form.submit();">
+          <select style="width:75px" class="form-control" name="prod_anz" id="prod_anz" onchange="this.form.submit();">
           {% if product.stock > 10 %}
             {% set max = 10 %}
           {% else %}
@@ -65,14 +60,19 @@
         </form>
       </td>{# /.prod-qty #}
 
+
+      <td colspan="1" class="prod-price">
+     {{ (product.price )|number_format(2,',', '.' ) }} €
+      </td>{# /.prod-price #}
+      
+      
       <td colspan="1" class="prod-price">
      {{ (product.price * product.amount)|number_format(2,',', '.' ) }} €
       </td>{# /.prod-price #}
-
       <td colspan="1" class="prod-del">
         <form method="post" action="{{ path('cartRemove', {'productId': product.id }) }}">
           <div class="submit_containern">
-            <input type="submit" name="entfernen" value="">
+            <input class="btn btn-default" type="submit" name="entfernen" value="Aus Warenkorb entfernen">
           </div>
         </form>
       </td>{# /.prod-del #}
@@ -82,13 +82,13 @@
   </tbody>
 </table>
 
-<p class="p_sum">Summe: {{ priceComplete|number_format(2,',', '.' ) }} €</p>
+<p class="p_sum">Summe: <strong>{{ priceComplete|number_format(2,',', '.' ) }} €</strong></p>
+<p class="p_sum">inkl. 19% MwSt.</p>
 
 <form method="post" action="">
   <div class="submit_container">
-    <input type="submit" value="zur Kasse">
+    <input class="btn btn-success" type="submit" value="zur Kasse">
   </div>
 </form>
 
-<a class="back" href="{{ lastUrl }}">zurück</a>
 {% endblock %}
